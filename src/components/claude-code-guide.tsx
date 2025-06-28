@@ -57,14 +57,8 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
           <div className="step">
             <h4>{t.guide.installation.step1.title}</h4>
             <p>{t.guide.installation.step1.desc}</p>
-            <div className="code-block">
-              <button 
-                className="copy-btn"
-                onClick={() => copyToClipboard('npm install -g claude-code', 'install-claude')}
-              >
-                {copiedCommand === 'install-claude' ? t.guide.copied : t.guide.copy}
-              </button>
-              <pre><code>npm install -g claude-code</code></pre>
+            <div className="image-placeholder">
+              <p>Download from: claude.ai/download</p>
             </div>
             <p className="note">{t.guide.installation.step1.note}</p>
           </div>
@@ -72,15 +66,7 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
           <div className="step">
             <h4>{t.guide.installation.step2.title}</h4>
             <p>{t.guide.installation.step2.desc}</p>
-            <div className="code-block">
-              <button 
-                className="copy-btn"
-                onClick={() => copyToClipboard('claude-code --version', 'check-version')}
-              >
-                {copiedCommand === 'check-version' ? t.guide.copied : t.guide.copy}
-              </button>
-              <pre><code>claude-code --version</code></pre>
-            </div>
+            <p className="note">{t.guide.installation.step2.note}</p>
           </div>
 
           <div className="step">
@@ -105,11 +91,18 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
           <div className="step">
             <h4>{t.guide.addingServers.method1.title}</h4>
             <p>{t.guide.addingServers.method1.desc}</p>
-            <ol>
-              <li>{t.guide.addingServers.method1.step1}</li>
-              <li>{t.guide.addingServers.method1.step2}</li>
-              <li>{t.guide.addingServers.method1.step3}</li>
-            </ol>
+            <div className="code-block">
+              <button 
+                className="copy-btn"
+                onClick={() => copyToClipboard('git clone https://github.com/ssql2014/mcp4eda.git\ncd mcp4eda/anysilicon\nnpm install\nnpm run build', 'clone-anysilicon')}
+              >
+                {copiedCommand === 'clone-anysilicon' ? t.guide.copied : t.guide.copy}
+              </button>
+              <pre><code>{`git clone https://github.com/ssql2014/mcp4eda.git
+cd mcp4eda/anysilicon
+npm install
+npm run build`}</code></pre>
+            </div>
             <div className="image-placeholder">
               <p>{t.guide.addingServers.method1.imagePlaceholder}</p>
             </div>
@@ -118,47 +111,39 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
           <div className="step">
             <h4>{t.guide.addingServers.method2.title}</h4>
             <p>{t.guide.addingServers.method2.desc}</p>
+            <p>{t.guide.addingServers.method2.configExample}</p>
             <div className="code-block">
               <button 
                 className="copy-btn"
-                onClick={() => copyToClipboard('claude-code config edit', 'edit-config')}
+                onClick={() => copyToClipboard(`{
+  "mcpServers": {
+    "anysilicon": {
+      "command": "node",
+      "args": ["/Users/YOUR_USERNAME/mcp4eda/anysilicon/dist/index.js"]
+    }
+  }
+}`, 'config-anysilicon')}
               >
-                {copiedCommand === 'edit-config' ? t.guide.copied : t.guide.copy}
+                {copiedCommand === 'config-anysilicon' ? t.guide.copied : t.guide.copy}
               </button>
-              <pre><code>claude-code config edit</code></pre>
-            </div>
-            <p>{t.guide.addingServers.method2.configExample}</p>
-            <div className="code-block">
               <pre><code>{`{
   "mcpServers": {
     "anysilicon": {
       "command": "node",
-      "args": ["/path/to/anysilicon/dist/index.js"]
-    },
-    "verible": {
-      "command": "npx",
-      "args": ["-y", "@mcpdev/server-verible"]
+      "args": ["/Users/YOUR_USERNAME/mcp4eda/anysilicon/dist/index.js"]
     }
   }
 }`}</code></pre>
             </div>
+            <p className="note">macOS example shown. For Windows use: C:\\Users\\YOUR_USERNAME\\mcp4eda\\anysilicon\\dist\\index.js</p>
           </div>
 
           <div className="step">
             <h4>{t.guide.addingServers.method3.title}</h4>
             <p>{t.guide.addingServers.method3.desc}</p>
-            <div className="code-block">
-              <button 
-                className="copy-btn"
-                onClick={() => copyToClipboard('claude-code add-server <server-name>', 'add-server')}
-              >
-                {copiedCommand === 'add-server' ? t.guide.copied : t.guide.copy}
-              </button>
-              <pre><code>claude-code add-server &lt;server-name&gt;</code></pre>
-            </div>
             <p className="example">{t.guide.addingServers.method3.example}</p>
-            <div className="code-block">
-              <pre><code>claude-code add-server anysilicon</code></pre>
+            <div className="image-placeholder">
+              <p>MCP icon appears in Claude Desktop when servers are loaded</p>
             </div>
           </div>
         </div>
@@ -174,28 +159,16 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
           <div className="step">
             <h4>{t.guide.usingServers.step1.title}</h4>
             <p>{t.guide.usingServers.step1.desc}</p>
-            <div className="code-block">
-              <button 
-                className="copy-btn"
-                onClick={() => copyToClipboard('claude-code', 'start-claude')}
-              >
-                {copiedCommand === 'start-claude' ? t.guide.copied : t.guide.copy}
-              </button>
-              <pre><code>claude-code</code></pre>
+            <div className="image-placeholder">
+              <p>MCP icon (puzzle piece) in Claude Desktop text input area</p>
             </div>
           </div>
 
           <div className="step">
             <h4>{t.guide.usingServers.step2.title}</h4>
             <p>{t.guide.usingServers.step2.desc}</p>
-            <div className="code-block">
-              <button 
-                className="copy-btn"
-                onClick={() => copyToClipboard('claude-code list-servers', 'list-servers')}
-              >
-                {copiedCommand === 'list-servers' ? t.guide.copied : t.guide.copy}
-              </button>
-              <pre><code>claude-code list-servers</code></pre>
+            <div className="image-placeholder">
+              <p>Select "anysilicon" from the MCP server list</p>
             </div>
           </div>
 
@@ -204,11 +177,10 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
             <p>{t.guide.usingServers.step3.desc}</p>
             <div className="example-queries">
               <h5>{t.guide.usingServers.step3.examples}</h5>
-              <ul>
-                <li><code>@anysilicon calculate dies per wafer for 5mm x 5mm die on 300mm wafer</code></li>
-                <li><code>@verible format my verilog file at src/cpu.v</code></li>
-                <li><code>@yosys synthesize design.v to gate-level netlist</code></li>
-              </ul>
+              <div className="code-block">
+                <pre><code>Calculate dies per wafer for 5mm x 5mm die on 300mm wafer</code></pre>
+              </div>
+              <p>Claude will automatically use the AnySilicon server to calculate the result.</p>
             </div>
           </div>
 
@@ -234,18 +206,14 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
             <h4>{t.guide.troubleshooting.issue1.title}</h4>
             <p className="issue">{t.guide.troubleshooting.issue1.problem}</p>
             <p className="solution"><strong>{t.guide.troubleshooting.solution}:</strong> {t.guide.troubleshooting.issue1.solution}</p>
-            <div className="code-block">
-              <pre><code>claude-code restart</code></pre>
-            </div>
+            <p>Simply restart Claude Desktop app to reload configuration.</p>
           </div>
 
           <div className="troubleshoot-item">
             <h4>{t.guide.troubleshooting.issue2.title}</h4>
             <p className="issue">{t.guide.troubleshooting.issue2.problem}</p>
             <p className="solution"><strong>{t.guide.troubleshooting.solution}:</strong> {t.guide.troubleshooting.issue2.solution}</p>
-            <div className="code-block">
-              <pre><code>claude-code logs --tail 50</code></pre>
-            </div>
+            <p>Check logs at: ~/Library/Logs/Claude/mcp.log (macOS)</p>
           </div>
 
           <div className="troubleshoot-item">

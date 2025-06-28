@@ -125,94 +125,95 @@ export const translations = {
     
     // Help Button
     help: {
-      buttonTitle: 'How to use MCP servers in Claude Code',
-      claudeCode: 'Claude Code Guide'
+      buttonTitle: 'How to use MCP servers in Claude',
+      claudeCode: 'Claude Guide'
     },
     
     // Guide
     guide: {
-      title: 'How to Use MCP Servers in Claude Code',
-      subtitle: 'Complete guide to installing and using MCP servers from this website in Claude Code',
+      title: 'How to Use MCP Servers in Claude',
+      subtitle: 'Complete guide to installing and using MCP servers with Claude Desktop or Claude.ai',
       copy: 'Copy',
       copied: 'Copied!',
       
       overview: {
         title: 'Overview',
-        subtitle: 'What is Claude Code?',
-        intro: 'Claude Code is an AI-powered CLI that lets you use MCP servers to enhance your development workflow. With MCP servers, you can give Claude access to specialized tools for EDA, file systems, databases, and more.',
+        subtitle: 'What is MCP?',
+        intro: 'Model Context Protocol (MCP) is an open protocol by Anthropic that enables seamless integration between Claude and external tools. You can use MCP servers with Claude Desktop app or Claude.ai subscription.',
         videoPlaceholder: 'Video tutorial coming soon...',
-        keyPoints: 'Key Benefits:',
-        point1: '🚀 Direct access to EDA tools from Claude',
-        point2: '🔧 No manual tool switching needed',
-        point3: '📊 Real-time data and computation',
-        point4: '🔌 Easy to add and remove servers'
+        keyPoints: 'Two Ways to Use MCP:',
+        point1: '🖥️ Claude Desktop App - Free app with API key',
+        point2: '🌐 Claude.ai Pro/Team - Web interface with subscription',
+        point3: '📊 Both support all MCP server features',
+        point4: '🔌 Same configuration, different interfaces'
       },
       
       installation: {
         title: 'Installation',
-        subtitle: 'Getting Started with Claude Code',
+        subtitle: 'Choose Your Method',
         step1: {
-          title: 'Step 1: Install Claude Code',
-          desc: 'Install Claude Code globally using npm:',
-          note: 'Requires Node.js 16.0 or higher. Make sure you have npm installed.'
+          title: 'Option 1: Claude Desktop (Recommended)',
+          desc: 'Download Claude Desktop from claude.ai/download',
+          note: 'Free to use with your own API key. Supports all MCP features.'
         },
         step2: {
-          title: 'Step 2: Verify Installation',
-          desc: 'Check that Claude Code is installed correctly:',
+          title: 'Option 2: Claude.ai Subscription',
+          desc: 'Use MCP directly in your browser with Claude Pro or Team subscription',
+          note: 'No installation required. MCP servers run in the cloud.'
         },
         step3: {
-          title: 'Step 3: Set Up API Key',
-          desc: 'Configure your Anthropic API key:',
-          item1: 'Get your API key from console.anthropic.com',
-          item2: 'Set the environment variable: export ANTHROPIC_API_KEY="your-key"',
-          item3: 'Or use claude-code configure to set it interactively'
+          title: 'Configuration File Location',
+          desc: 'Find your Claude Desktop config file:',
+          item1: 'macOS: ~/Library/Application Support/Claude/claude_desktop_config.json',
+          item2: 'Windows: %APPDATA%\\Claude\\claude_desktop_config.json',
+          item3: 'Linux: ~/.config/Claude/claude_desktop_config.json'
         }
       },
       
       addingServers: {
-        title: 'Adding MCP Servers',
-        subtitle: 'Three Ways to Add MCP Servers',
+        title: 'Complete Example: AnySilicon Die Calculator',
+        subtitle: 'Step-by-Step Setup Guide',
         method1: {
-          title: 'Method 1: Copy from Website (Recommended)',
-          desc: 'The easiest way to add servers:',
-          step1: 'Browse servers on this website',
-          step2: 'Click on any server to view details',
-          step3: 'Copy the configuration using the copy button',
-          imagePlaceholder: 'Screenshot showing copy button in server modal'
+          title: 'Step 1: Clone and Build the Server',
+          desc: 'First, download and build the AnySilicon MCP server:',
+          step1: 'Open Terminal',
+          step2: 'Run: git clone https://github.com/ssql2014/mcp4eda.git',
+          step3: 'Run: cd mcp4eda/anysilicon && npm install && npm run build',
+          imagePlaceholder: 'Terminal showing successful build output'
         },
         method2: {
-          title: 'Method 2: Edit Configuration File',
-          desc: 'Manually edit your Claude Code configuration:',
-          configExample: 'Add the server configuration to your mcpServers object:'
+          title: 'Step 2: Configure Claude Desktop',
+          desc: 'Open your claude_desktop_config.json file and add:',
+          configExample: 'Replace /Users/YOUR_USERNAME with your actual path:'
         },
         method3: {
-          title: 'Method 3: Use CLI Command',
-          desc: 'Add servers using the command line:',
-          example: 'Example:'
+          title: 'Step 3: Restart Claude Desktop',
+          desc: 'Restart Claude Desktop and verify the server is loaded:',
+          example: 'You should see the MCP icon in Claude\'s interface'
         }
       },
       
       usingServers: {
         title: 'Using MCP Servers',
-        subtitle: 'How to Use Installed Servers',
+        subtitle: 'Real Example with AnySilicon',
         step1: {
-          title: 'Step 1: Start Claude Code',
-          desc: 'Launch Claude Code in your project directory:'
+          title: 'Step 1: Open Claude Desktop',
+          desc: 'Look for the MCP icon (puzzle piece) in the text input area'
         },
         step2: {
-          title: 'Step 2: List Available Servers',
-          desc: 'Check which MCP servers are available:'
+          title: 'Step 2: Select the Server',
+          desc: 'Click the MCP icon and select "anysilicon" from the list'
         },
         step3: {
-          title: 'Step 3: Use Server Commands',
-          desc: 'Reference servers using @ notation in your prompts:',
-          examples: 'Example Commands:'
+          title: 'Step 3: Try These Examples',
+          desc: 'Ask Claude to use the AnySilicon calculator:',
+          examples: 'Example Prompts:'
         },
         tips: {
-          title: '💡 Pro Tips',
-          tip1: 'Use Tab completion to see available server commands',
-          tip2: 'Combine multiple servers in a single prompt',
-          tip3: 'Servers persist across Claude Code sessions'
+          title: '💡 Real Examples to Try',
+          tip1: '"Calculate dies per wafer for 5mm x 5mm die on 300mm wafer"',
+          tip2: '"How many 10mm x 8mm dies fit on a 200mm wafer?"',
+          tip3: '"Compare die yield for 300mm vs 200mm wafers with 7mm square dies"'
         }
       },
       
@@ -367,94 +368,95 @@ export const translations = {
     
     // Help Button
     help: {
-      buttonTitle: '如何在 Claude Code 中使用 MCP 服务器',
-      claudeCode: 'Claude Code 指南'
+      buttonTitle: '如何在 Claude 中使用 MCP 服务器',
+      claudeCode: 'Claude 指南'
     },
     
     // Guide
     guide: {
-      title: '如何在 Claude Code 中使用 MCP 服务器',
-      subtitle: '从本网站安装和使用 MCP 服务器的完整指南',
+      title: '如何在 Claude 中使用 MCP 服务器',
+      subtitle: '使用 Claude Desktop 或 Claude.ai 安装和使用 MCP 服务器的完整指南',
       copy: '复制',
       copied: '已复制！',
       
       overview: {
         title: '概述',
-        subtitle: '什么是 Claude Code？',
-        intro: 'Claude Code 是一个 AI 驱动的 CLI，让您可以使用 MCP 服务器来增强开发工作流程。通过 MCP 服务器，您可以让 Claude 访问专门的 EDA 工具、文件系统、数据库等。',
+        subtitle: '什么是 MCP？',
+        intro: '模型上下文协议（MCP）是 Anthropic 开发的开放协议，能够实现 Claude 与外部工具之间的无缝集成。您可以通过 Claude Desktop 应用程序或 Claude.ai 订阅使用 MCP 服务器。',
         videoPlaceholder: '视频教程即将推出...',
-        keyPoints: '主要优势：',
-        point1: '🚀 从 Claude 直接访问 EDA 工具',
-        point2: '🔧 无需手动切换工具',
-        point3: '📊 实时数据和计算',
-        point4: '🔌 轻松添加和删除服务器'
+        keyPoints: '使用 MCP 的两种方式：',
+        point1: '🖥️ Claude Desktop 应用 - 免费应用，需要 API 密钥',
+        point2: '🌐 Claude.ai Pro/Team - 网页界面，需要订阅',
+        point3: '📊 两者都支持所有 MCP 服务器功能',
+        point4: '🔌 相同的配置，不同的界面'
       },
       
       installation: {
         title: '安装',
-        subtitle: '开始使用 Claude Code',
+        subtitle: '选择您的方法',
         step1: {
-          title: '步骤 1：安装 Claude Code',
-          desc: '使用 npm 全局安装 Claude Code：',
-          note: '需要 Node.js 16.0 或更高版本。确保已安装 npm。'
+          title: '选项 1：Claude Desktop（推荐）',
+          desc: '从 claude.ai/download 下载 Claude Desktop',
+          note: '免费使用，需要您自己的 API 密钥。支持所有 MCP 功能。'
         },
         step2: {
-          title: '步骤 2：验证安装',
-          desc: '检查 Claude Code 是否正确安装：',
+          title: '选项 2：Claude.ai 订阅',
+          desc: '使用 Claude Pro 或 Team 订阅直接在浏览器中使用 MCP',
+          note: '无需安装。MCP 服务器在云端运行。'
         },
         step3: {
-          title: '步骤 3：设置 API 密钥',
-          desc: '配置您的 Anthropic API 密钥：',
-          item1: '从 console.anthropic.com 获取您的 API 密钥',
-          item2: '设置环境变量：export ANTHROPIC_API_KEY="your-key"',
-          item3: '或使用 claude-code configure 进行交互式设置'
+          title: '配置文件位置',
+          desc: '找到您的 Claude Desktop 配置文件：',
+          item1: 'macOS: ~/Library/Application Support/Claude/claude_desktop_config.json',
+          item2: 'Windows: %APPDATA%\\Claude\\claude_desktop_config.json',
+          item3: 'Linux: ~/.config/Claude/claude_desktop_config.json'
         }
       },
       
       addingServers: {
-        title: '添加 MCP 服务器',
-        subtitle: '三种添加 MCP 服务器的方法',
+        title: '完整示例：AnySilicon 晶圆计算器',
+        subtitle: '分步设置指南',
         method1: {
-          title: '方法 1：从网站复制（推荐）',
-          desc: '最简单的添加服务器方式：',
-          step1: '浏览本网站的服务器',
-          step2: '点击任意服务器查看详情',
-          step3: '使用复制按钮复制配置',
-          imagePlaceholder: '显示服务器模态框中复制按钮的截图'
+          title: '步骤 1：克隆并构建服务器',
+          desc: '首先，下载并构建 AnySilicon MCP 服务器：',
+          step1: '打开终端',
+          step2: '运行：git clone https://github.com/ssql2014/mcp4eda.git',
+          step3: '运行：cd mcp4eda/anysilicon && npm install && npm run build',
+          imagePlaceholder: '显示成功构建输出的终端'
         },
         method2: {
-          title: '方法 2：编辑配置文件',
-          desc: '手动编辑您的 Claude Code 配置：',
-          configExample: '将服务器配置添加到您的 mcpServers 对象中：'
+          title: '步骤 2：配置 Claude Desktop',
+          desc: '打开您的 claude_desktop_config.json 文件并添加：',
+          configExample: '将 /Users/YOUR_USERNAME 替换为您的实际路径：'
         },
         method3: {
-          title: '方法 3：使用 CLI 命令',
-          desc: '使用命令行添加服务器：',
-          example: '示例：'
+          title: '步骤 3：重启 Claude Desktop',
+          desc: '重启 Claude Desktop 并验证服务器已加载：',
+          example: '您应该在 Claude 界面中看到 MCP 图标'
         }
       },
       
       usingServers: {
         title: '使用 MCP 服务器',
-        subtitle: '如何使用已安装的服务器',
+        subtitle: 'AnySilicon 的实际示例',
         step1: {
-          title: '步骤 1：启动 Claude Code',
-          desc: '在项目目录中启动 Claude Code：'
+          title: '步骤 1：打开 Claude Desktop',
+          desc: '在文本输入区域查找 MCP 图标（拼图图标）'
         },
         step2: {
-          title: '步骤 2：列出可用服务器',
-          desc: '检查哪些 MCP 服务器可用：'
+          title: '步骤 2：选择服务器',
+          desc: '点击 MCP 图标并从列表中选择"anysilicon"'
         },
         step3: {
-          title: '步骤 3：使用服务器命令',
-          desc: '在提示中使用 @ 符号引用服务器：',
-          examples: '示例命令：'
+          title: '步骤 3：尝试这些示例',
+          desc: '让 Claude 使用 AnySilicon 计算器：',
+          examples: '示例提示：'
         },
         tips: {
-          title: '💡 专业提示',
-          tip1: '使用 Tab 键补全查看可用的服务器命令',
-          tip2: '在单个提示中组合多个服务器',
-          tip3: '服务器在 Claude Code 会话之间持续存在'
+          title: '💡 实际示例',
+          tip1: '"计算 300mm 晶圆上 5mm x 5mm 晶粒的数量"',
+          tip2: '"200mm 晶圆能容纳多少个 10mm x 8mm 的晶粒？"',
+          tip3: '"比较 7mm 方形晶粒在 300mm 和 200mm 晶圆上的产量"'
         }
       },
       
