@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修复环境变量 - Vercel 部署</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        .alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .env-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .env-var {
+            margin: 20px 0;
+        }
+        .env-name {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .env-value {
+            background: white;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            word-break: break-all;
+            position: relative;
+            color: #212529;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        .copy-btn.copied {
+            background: #28a745;
+        }
+        .warning {
+            color: #dc3545;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .step-by-step {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .step {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #007bff;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #e83e8c;
+        }
+        .deploy-button {
+            display: inline-block;
+            background: #000;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+        .deploy-button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="alert">
+        <h3>⚠️ 环境变量错误修复</h3>
+        <p>如果您看到 "references Secret which does not exist" 错误，请按照以下步骤操作。</p>
+    </div>
+
+    <div class="container">
+        <h1>🔧 修复 Vercel 环境变量配置</h1>
+        
+        <div class="warning">
+            ❌ 不要使用 @database_url 这样的引用格式<br>
+            ✅ 直接粘贴下面的完整值
+        </div>
+
+        <div class="env-section">
+            <h2>正确的环境变量值</h2>
+            <p>请直接复制粘贴以下值（点击"复制"按钮）：</p>
+            
+            <div class="env-var">
+                <div class="env-name">DATABASE_URL</div>
+                <div class="env-value">
+                    postgresql://postgres.qoytiztonbhxfwujvanq:Hexsyh-behpe3-jaqbuf@aws-0-us-east-2.pooler.supabase.com:6543/postgres?pgbouncer=true
+                    <button class="copy-btn" onclick="copyEnv(this, 'postgresql://postgres.qoytiztonbhxfwujvanq:Hexsyh-behpe3-jaqbuf@aws-0-us-east-2.pooler.supabase.com:6543/postgres?pgbouncer=true')">复制</button>
+                </div>
+            </div>
+            
+            <div class="env-var">
+                <div class="env-name">NEXTAUTH_URL</div>
+                <div class="env-value">
+                    https://www.mcp4eda.cn
+                    <button class="copy-btn" onclick="copyEnv(this, 'https://www.mcp4eda.cn')">复制</button>
+                </div>
+            </div>
+            
+            <div class="env-var">
+                <div class="env-name">NEXTAUTH_SECRET</div>
+                <div class="env-value">
+                    RDYwr/hcphNVAUc4VxUgJjxQ7u7yOUrQj6HppaqGbcI=
+                    <button class="copy-btn" onclick="copyEnv(this, 'RDYwr/hcphNVAUc4VxUgJjxQ7u7yOUrQj6HppaqGbcI=')">复制</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-by-step">
+            <h2>修复步骤</h2>
+            
+            <h3>如果正在部署：</h3>
+            <div class="step" data-step="1">
+                在环境变量输入框中，删除所有 <code>@xxx</code> 格式的引用
+            </div>
+            <div class="step" data-step="2">
+                粘贴上面复制的实际值
+            </div>
+            <div class="step" data-step="3">
+                确保没有多余的空格或引号
+            </div>
+            <div class="step" data-step="4">
+                点击 Deploy 继续部署
+            </div>
+            
+            <h3>如果已经部署但失败：</h3>
+            <div class="step" data-step="1">
+                进入 Vercel Dashboard
+            </div>
+            <div class="step" data-step="2">
+                找到项目 <code>mcp-eda-auth</code>
+            </div>
+            <div class="step" data-step="3">
+                进入 Settings → Environment Variables
+            </div>
+            <div class="step" data-step="4">
+                编辑每个变量，替换为上面的实际值
+            </div>
+            <div class="step" data-step="5">
+                保存后，进入 Deployments 页面
+            </div>
+            <div class="step" data-step="6">
+                点击最新部署旁边的三个点，选择 Redeploy
+            </div>
+        </div>
+
+        <h2>重新部署（推荐）</h2>
+        <p>如果问题持续，建议删除项目重新部署：</p>
+        <a href="https://vercel.com/new/clone?repository-url=https://github.com/ssql2014/mcp-eda-hub&project-name=mcp-eda-auth&root-directory=nextjs-app" 
+           class="deploy-button" 
+           target="_blank">
+            重新部署到 Vercel
+        </a>
+        
+        <p class="success">记住：在环境变量中直接粘贴完整的值，不要使用 @ 引用！</p>
+
+        <h2>部署后配置域名</h2>
+        <div class="step-by-step">
+            <div class="step" data-step="1">
+                在 Vercel 项目 Settings → Domains 中添加 <code>www.mcp4eda.cn</code>
+            </div>
+            <div class="step" data-step="2">
+                在域名服务商修改 DNS：
+                <ul>
+                    <li>类型: CNAME</li>
+                    <li>主机: www</li>
+                    <li>值: cname.vercel-dns.com</li>
+                </ul>
+            </div>
+            <div class="step" data-step="3">
+                等待 DNS 生效（5-30分钟）
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyEnv(button, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = '已复制';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = '复制';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动选择复制');
+            });
+        }
+    </script>
+</body>
+</html>

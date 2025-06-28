@@ -1,0 +1,43 @@
+name: Claude Commit Message Generator
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'feature/*'
+      - 'fix/*'
+
+jobs:
+  generate-commit-message:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Generate Commit Message with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+          
+          # Use commit message mode
+          mode: commit-message
+          
+          # Custom prompt for commit messages
+          commit-prompt: |
+            Generate a conventional commit message for the changes.
+            Follow this format:
+            - feat: for new features
+            - fix: for bug fixes
+            - docs: for documentation changes
+            - style: for formatting changes
+            - refactor: for code refactoring
+            - test: for test changes
+            - chore: for maintenance tasks
+            
+            Keep it concise and descriptive.

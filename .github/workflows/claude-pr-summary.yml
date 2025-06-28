@@ -1,0 +1,39 @@
+name: Claude PR Summary
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  pr-summary:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Generate PR Summary with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+          
+          # Use summary mode
+          mode: summary
+          
+          # Custom summary prompt
+          summary-prompt: |
+            Please provide a comprehensive summary of this pull request:
+            
+            1. **Overview**: What is the main purpose of this PR?
+            2. **Key Changes**: List the significant changes made
+            3. **Impact**: What parts of the codebase are affected?
+            4. **Testing**: What testing considerations should reviewers focus on?
+            5. **Breaking Changes**: Are there any breaking changes?
+            
+            Format the response in clear, concise markdown.
