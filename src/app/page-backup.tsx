@@ -3,26 +3,22 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { mcpServers, categories, type MCPServer } from '@/lib/data'
-import { useLanguage } from '@/components/language-provider'
-import { LanguageSwitcher } from '@/components/language-switcher'
-import { categoryTranslations } from '@/lib/i18n'
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [showAllCategories, setShowAllCategories] = useState(false)
-  const { t, locale } = useLanguage()
 
   // Calculate active categories
   const activeCategories = useMemo(() => {
     const categoriesWithCount = categories.filter(cat => cat.count > 0)
     const allCategory = {
       id: 'all',
-      name: t.categories.all,
+      name: 'All Categories',
       count: mcpServers.length
     }
     return [allCategory, ...categoriesWithCount]
-  }, [t.categories.all])
+  }, [])
 
   const visibleCategories = showAllCategories ? activeCategories : activeCategories.slice(0, 8)
 
@@ -59,22 +55,19 @@ export default function Home() {
               <path d="M9 9h6v6H9z" />
               <path d="M9 1v6M15 1v6M9 17v6M15 17v6M1 9h6M17 9h6M1 15h6M17 15h6" />
             </svg>
-            <h1>{t.siteName}</h1>
+            <h1>MCP EDA Hub</h1>
           </div>
           <ul className="nav-links">
-            <li><a href="#servers">{t.nav.servers}</a></li>
-            <li><a href="#about">{t.nav.about}</a></li>
-            <li><Link href="/login">{t.nav.login}</Link></li>
-            <li><Link href="/register">{t.nav.register}</Link></li>
+            <li><a href="#servers">Servers</a></li>
+            <li><a href="#about">About</a></li>
+            <li><Link href="/login">Login</Link></li>
+            <li><Link href="/register">Register</Link></li>
             <li>
               <a href="https://github.com/ssql2014/mcp4eda" target="_blank" rel="noopener noreferrer" className="github-link">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
               </a>
-            </li>
-            <li>
-              <LanguageSwitcher />
             </li>
           </ul>
         </nav>
@@ -83,16 +76,16 @@ export default function Home() {
       {/* Hero Section */}
       <section className="hero">
         <div className="container">
-          <h1 className="hero-title">{t.hero.title}</h1>
+          <h1 className="hero-title">MCP EDA Hub</h1>
           <p className="hero-subtitle">
-            {t.hero.subtitle}
+            Model Context Protocol Servers for Electronic Design Automation
           </p>
           
           <div className="search-container">
             <input
               type="text"
               className="search-input"
-              placeholder={t.hero.searchPlaceholder}
+              placeholder="Search MCP servers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -105,15 +98,15 @@ export default function Home() {
           <div className="stats">
             <div className="stat">
               <span className="stat-number">{stats.total}</span>
-              <span className="stat-label">{t.hero.stats.servers}</span>
+              <span className="stat-label">MCP Servers</span>
             </div>
             <div className="stat">
               <span className="stat-number">{stats.categories}</span>
-              <span className="stat-label">{t.hero.stats.categories}</span>
+              <span className="stat-label">Categories</span>
             </div>
             <div className="stat">
               <span className="stat-number">{stats.tags}</span>
-              <span className="stat-label">{t.hero.stats.tags}</span>
+              <span className="stat-label">Tags</span>
             </div>
           </div>
         </div>
@@ -123,13 +116,13 @@ export default function Home() {
       <section className="categories-section">
         <div className="container">
           <div className="categories-header">
-            <h2>{t.categories.title}</h2>
+            <h2>Categories</h2>
             {activeCategories.length > 8 && (
               <button 
                 className="btn-text"
                 onClick={() => setShowAllCategories(!showAllCategories)}
               >
-                {showAllCategories ? t.categories.showLess : t.categories.showAll}
+                {showAllCategories ? 'Show Less' : 'Show All'}
               </button>
             )}
           </div>
@@ -140,10 +133,7 @@ export default function Home() {
                 className={`category-tag ${selectedCategory === category.id ? 'active' : ''}`}
                 onClick={() => setSelectedCategory(category.id)}
               >
-                {category.id === 'all' 
-                  ? category.name 
-                  : categoryTranslations[locale][category.name as keyof typeof categoryTranslations['en']] || category.name
-                } ({category.count})
+                {category.name} ({category.count})
               </button>
             ))}
           </div>
@@ -155,7 +145,7 @@ export default function Home() {
         <div className="container">
           <div className="servers-header">
             <h2>{selectedCategory === 'all' 
-              ? `${t.servers.allServers} (${filteredServers.length})`
+              ? `All MCP Servers (${filteredServers.length})`
               : `${activeCategories.find(c => c.id === selectedCategory)?.name} (${filteredServers.length})`
             }</h2>
           </div>
@@ -167,8 +157,8 @@ export default function Home() {
                 <path d="m21 21-4.35-4.35" />
                 <path d="M8 8l6 6m0-6l-6 6" />
               </svg>
-              <h3>{t.servers.noResults}</h3>
-              <p>{t.servers.noResultsDesc}</p>
+              <h3>No servers found</h3>
+              <p>Try adjusting your search or filter criteria</p>
             </div>
           ) : (
             <div className="servers-grid">
@@ -183,19 +173,19 @@ export default function Home() {
       {/* About Section */}
       <section id="about" className="about-section">
         <div className="container">
-          <h2>{t.about.title}</h2>
+          <h2>About MCP EDA Hub</h2>
           <div className="about-grid">
             <div className="about-card">
-              <h4>{t.about.whatIsMcp.title}</h4>
-              <p>{t.about.whatIsMcp.desc}</p>
+              <h4>What is MCP?</h4>
+              <p>Model Context Protocol (MCP) is an open protocol that enables seamless integration between AI assistants and external tools.</p>
             </div>
             <div className="about-card">
-              <h4>{t.about.edaIntegration.title}</h4>
-              <p>{t.about.edaIntegration.desc}</p>
+              <h4>EDA Integration</h4>
+              <p>Access professional EDA tools directly from your AI assistant, streamlining your hardware design workflow.</p>
             </div>
             <div className="about-card">
-              <h4>{t.about.openSource.title}</h4>
-              <p>{t.about.openSource.desc}</p>
+              <h4>Open Source</h4>
+              <p>All MCP servers are open source. Contribute, customize, or create your own EDA tool integrations.</p>
             </div>
           </div>
         </div>
@@ -204,11 +194,11 @@ export default function Home() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 {t.siteName}. {t.footer.rights}</p>
+          <p>&copy; 2025 MCP EDA Hub. All rights reserved.</p>
           <p>
             <a href="https://github.com/ssql2014/mcp4eda" target="_blank" rel="noopener noreferrer">GitHub</a>
             {' | '}
-            <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">{t.footer.mcp}</a>
+            <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">MCP Documentation</a>
           </p>
         </div>
       </footer>
@@ -495,7 +485,6 @@ export default function Home() {
 
 function ServerCard({ server }: { server: MCPServer }) {
   const [showModal, setShowModal] = useState(false)
-  const { t, locale } = useLanguage()
 
   return (
     <>
@@ -503,11 +492,9 @@ function ServerCard({ server }: { server: MCPServer }) {
         <div className="server-header">
           <div>
             <h3 className="server-title">{server.name}</h3>
-            <p className="server-author">{t.servers.by} {server.author}</p>
+            <p className="server-author">by {server.author}</p>
           </div>
-          <span className="server-category">
-            {categoryTranslations[locale][server.category as keyof typeof categoryTranslations['en']] || server.category}
-          </span>
+          <span className="server-category">{server.category}</span>
         </div>
         
         <p className="server-description">{server.description}</p>
@@ -584,8 +571,6 @@ function ServerCard({ server }: { server: MCPServer }) {
 }
 
 function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => void }) {
-  const { t, locale } = useLanguage()
-  
   return (
     <>
       <div className="modal active" onClick={onClose}>
@@ -593,42 +578,40 @@ function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => vo
           <button className="modal-close" onClick={onClose}>&times;</button>
           <div className="modal-body">
           <h2>{server.name}</h2>
-          <p className="server-author">{t.servers.by} {server.author}</p>
-          <p className="server-category">
-            {categoryTranslations[locale][server.category as keyof typeof categoryTranslations['en']] || server.category}
-          </p>
+          <p className="server-author">by {server.author}</p>
+          <p className="server-category">{server.category}</p>
           
-          <h3>{t.modal.description}</h3>
+          <h3>Description</h3>
           <p>{server.description}</p>
           
-          <h3>{t.modal.features}</h3>
+          <h3>Features</h3>
           <ul>
             {server.features.map((feature: string, index: number) => (
               <li key={index}>{feature}</li>
             ))}
           </ul>
           
-          <h3>{t.modal.installation}</h3>
+          <h3>Installation</h3>
           <div className="code-block">
             <pre><code>{server.installCommand}</code></pre>
           </div>
           
-          <h3>{t.modal.configuration}</h3>
+          <h3>Configuration</h3>
           <div className="code-block">
             <pre><code>{JSON.stringify(server.config, null, 2)}</code></pre>
           </div>
           
-          <h3>{t.modal.tags}</h3>
+          <h3>Tags</h3>
           <div className="server-tags">
             {server.tags.map((tag: string) => (
               <span key={tag} className="server-tag">{tag}</span>
             ))}
           </div>
           
-          <h3>{t.modal.links}</h3>
+          <h3>Links</h3>
           <p>
             <a href={server.githubUrl} target="_blank" rel="noopener noreferrer">
-              {t.modal.viewOnGitHub}
+              View on GitHub →
             </a>
           </p>
         </div>

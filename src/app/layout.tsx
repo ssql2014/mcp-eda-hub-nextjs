@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MCP EDA Hub",
-  description: "Discover and explore Model Context Protocol servers for EDA workflows",
+  title: "MCP EDA Hub | MCP EDA 中心",
+  description: "Discover and explore Model Context Protocol servers for EDA workflows | 发现和探索用于 EDA 工作流程的模型上下文协议服务器",
 };
 
 export default function RootLayout({
