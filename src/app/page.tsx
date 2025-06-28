@@ -146,12 +146,19 @@ export default function Home() {
       {/* Hero Section */}
       <section className="hero">
         <div className="container">
-          <div className="hero-banner" onClick={() => setShowGuide(true)}>
+          <button 
+            className="hero-banner" 
+            onClick={() => {
+              console.log('Banner clicked');
+              setShowGuide(true);
+            }}
+            type="button"
+          >
             <span>{t.hero.banner.text}</span>
             <span className="banner-link">
               {t.hero.banner.link} {t.hero.banner.arrow}
             </span>
-          </div>
+          </button>
           
           <h1 className="hero-title">{t.hero.title}</h1>
           <p className="hero-subtitle">
@@ -343,7 +350,7 @@ export default function Home() {
       </footer>
 
       {/* Help Button */}
-      <HelpButton />
+      <HelpButton onClick={() => setShowGuide(true)} />
 
       {/* Claude Code Guide Modal */}
       <ClaudeCodeGuide isOpen={showGuide} onClose={() => setShowGuide(false)} />
@@ -439,6 +446,10 @@ export default function Home() {
           transition: all 0.3s ease;
           font-size: 0.875rem;
           animation: fadeIn 0.8s ease-out;
+          position: relative;
+          z-index: 10;
+          color: inherit;
+          font-family: inherit;
         }
 
         .hero-banner:hover {
@@ -446,6 +457,15 @@ export default function Home() {
           border-color: rgba(99, 102, 241, 0.3);
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .hero-banner:focus {
+          outline: 2px solid var(--primary-color);
+          outline-offset: 2px;
+        }
+
+        .hero-banner:active {
+          transform: scale(0.98);
         }
 
         .banner-link {

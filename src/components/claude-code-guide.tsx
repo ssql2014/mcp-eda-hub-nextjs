@@ -168,7 +168,7 @@ npm run build`}</code></pre>
             <h4>{t.guide.usingServers.step2.title}</h4>
             <p>{t.guide.usingServers.step2.desc}</p>
             <div className="image-placeholder">
-              <p>Select "anysilicon" from the MCP server list</p>
+              <p>Select &quot;anysilicon&quot; from the MCP server list</p>
             </div>
           </div>
 

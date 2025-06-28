@@ -1,18 +1,15 @@
 'use client'
 
-import { useState } from 'react'
-import { ClaudeCodeGuide } from './claude-code-guide'
 import { useLanguage } from './language-provider'
 
-export function HelpButton() {
-  const [showGuide, setShowGuide] = useState(false)
+export function HelpButton({ onClick }: { onClick: () => void }) {
   const { t } = useLanguage()
 
   return (
     <>
       <button 
         className="help-button"
-        onClick={() => setShowGuide(true)}
+        onClick={onClick}
         title={t.help.buttonTitle}
       >
         <svg className="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -22,8 +19,6 @@ export function HelpButton() {
         </svg>
         <span className="help-text">{t.help.claudeCode}</span>
       </button>
-
-      <ClaudeCodeGuide isOpen={showGuide} onClose={() => setShowGuide(false)} />
 
       <style jsx>{`
         .help-button {
