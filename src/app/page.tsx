@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 import { mcpServers, categories, type MCPServer } from '@/lib/data'
 import { useLanguage } from '@/components/language-provider'
@@ -105,6 +105,17 @@ export default function Home() {
   const clearAllTags = () => {
     setSelectedTags([])
   }
+  
+  // Memoize callbacks to prevent unnecessary re-renders
+  const handleOpenGuide = useCallback(() => {
+    console.log('Opening guide');
+    setShowGuide(true);
+  }, []);
+  
+  const handleCloseGuide = useCallback(() => {
+    console.log('Closing guide');
+    setShowGuide(false);
+  }, []);
 
   return (
     <>
@@ -123,7 +134,7 @@ export default function Home() {
             <li><a href="#servers">{t.nav.servers}</a></li>
             <li><a href="#about">{t.nav.about}</a></li>
             <li>
-              <button className="quick-start-btn" onClick={() => setShowGuide(true)}>
+              <button className="quick-start-btn" onClick={handleOpenGuide}>
                 {t.nav.quickStart}
               </button>
             </li>
@@ -148,10 +159,7 @@ export default function Home() {
         <div className="container">
           <button 
             className="hero-banner" 
-            onClick={() => {
-              console.log('Banner clicked');
-              setShowGuide(true);
-            }}
+            onClick={handleOpenGuide}
             type="button"
           >
             <span>{t.hero.banner.text}</span>
@@ -350,10 +358,10 @@ export default function Home() {
       </footer>
 
       {/* Help Button */}
-      <HelpButton onClick={() => setShowGuide(true)} />
+      <HelpButton onClick={handleOpenGuide} />
 
       {/* Claude Code Guide Modal */}
-      <ClaudeCodeGuide isOpen={showGuide} onClose={() => setShowGuide(false)} />
+      <ClaudeCodeGuide isOpen={showGuide} onClose={handleCloseGuide} />
 
       <style jsx>{`
         .header {

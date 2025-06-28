@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLanguage } from '@/components/language-provider'
 
 interface GuideSection {
@@ -13,6 +13,15 @@ export function ClaudeCodeGuide({ isOpen, onClose }: { isOpen: boolean; onClose:
   const { t } = useLanguage()
   const [activeSection, setActiveSection] = useState('overview')
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null)
+  
+  // Reset active section when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setActiveSection('overview')
+    }
+  }, [isOpen])
+  
+  console.log('ClaudeCodeGuide render, isOpen:', isOpen)
 
   const copyToClipboard = (text: string, commandId: string) => {
     navigator.clipboard.writeText(text).then(() => {
