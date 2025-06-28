@@ -33,12 +33,31 @@ export const translations = {
       all: 'All Categories'
     },
     
+    // Tags
+    tags: {
+      title: 'Filter by Tags',
+      showAll: 'Show All',
+      showLess: 'Show Less',
+      clearAll: 'Clear All',
+      selectedInfo: 'Showing servers with {count} selected tags'
+    },
+    
     // Servers
     servers: {
       allServers: 'All MCP Servers',
       by: 'by',
       noResults: 'No servers found',
-      noResultsDesc: 'Try adjusting your search or filter criteria'
+      noResultsDesc: 'Try adjusting your search or filter criteria',
+      new: 'NEW',
+      sortBy: 'Sort by',
+      sorting: {
+        nameAsc: 'Name (A-Z)',
+        nameDesc: 'Name (Z-A)',
+        starsDesc: 'Most Stars',
+        starsAsc: 'Least Stars',
+        dateDesc: 'Newest First',
+        dateAsc: 'Oldest First'
+      }
     },
     
     // About
@@ -72,7 +91,9 @@ export const translations = {
       configuration: 'Configuration',
       tags: 'Tags',
       links: 'Links',
-      viewOnGitHub: 'View on GitHub →'
+      viewOnGitHub: 'View on GitHub →',
+      copy: 'Copy',
+      copied: 'Copied!'
     },
     
     // Auth
@@ -127,12 +148,31 @@ export const translations = {
       all: '所有分类'
     },
     
+    // Tags
+    tags: {
+      title: '按标签筛选',
+      showAll: '显示全部',
+      showLess: '收起',
+      clearAll: '清除所有',
+      selectedInfo: '显示包含 {count} 个所选标签的服务器'
+    },
+    
     // Servers
     servers: {
       allServers: '所有 MCP 服务器',
       by: '作者：',
       noResults: '未找到服务器',
-      noResultsDesc: '请尝试调整搜索或筛选条件'
+      noResultsDesc: '请尝试调整搜索或筛选条件',
+      new: '新',
+      sortBy: '排序方式',
+      sorting: {
+        nameAsc: '名称 (A-Z)',
+        nameDesc: '名称 (Z-A)',
+        starsDesc: '星标最多',
+        starsAsc: '星标最少',
+        dateDesc: '最新优先',
+        dateAsc: '最旧优先'
+      }
     },
     
     // About
@@ -166,7 +206,9 @@ export const translations = {
       configuration: '配置',
       tags: '标签',
       links: '链接',
-      viewOnGitHub: '在 GitHub 上查看 →'
+      viewOnGitHub: '在 GitHub 上查看 →',
+      copy: '复制',
+      copied: '已复制！'
     },
     
     // Auth

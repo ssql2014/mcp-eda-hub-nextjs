@@ -7,10 +7,15 @@ import { useLanguage } from '@/components/language-provider'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { categoryTranslations } from '@/lib/i18n'
 
+type SortOption = 'nameAsc' | 'nameDesc' | 'starsDesc' | 'starsAsc' | 'dateDesc' | 'dateAsc'
+
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [showAllCategories, setShowAllCategories] = useState(false)
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [showAllTags, setShowAllTags] = useState(false)
+  const [sortBy, setSortBy] = useState<SortOption>('dateDesc')
   const { t, locale } = useLanguage()
 
   // Calculate active categories
@@ -26,8 +31,19 @@ export default function Home() {
 
   const visibleCategories = showAllCategories ? activeCategories : activeCategories.slice(0, 8)
 
+  // Extract all unique tags
+  const allTags = useMemo(() => {
+    const tagSet = new Set<string>()
+    mcpServers.forEach(server => {
+      server.tags.forEach(tag => tagSet.add(tag))
+    })
+    return Array.from(tagSet).sort()
+  }, [])
+
+  const visibleTags = showAllTags ? allTags : allTags.slice(0, 20)
+
   const filteredServers = useMemo(() => {
-    return mcpServers.filter(server => {
+    const filtered = mcpServers.filter(server => {
       const matchesSearch = searchQuery.toLowerCase() === '' ||
         server.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         server.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,15 +53,54 @@ export default function Home() {
       const matchesCategory = selectedCategory === 'all' || 
         server.category.toLowerCase().replace(/[\s\/]/g, '-') === selectedCategory
       
-      return matchesSearch && matchesCategory
+      // Check if server has ALL selected tags (AND logic)
+      const matchesTags = selectedTags.length === 0 || 
+        selectedTags.every(tag => server.tags.includes(tag))
+      
+      return matchesSearch && matchesCategory && matchesTags
     })
-  }, [searchQuery, selectedCategory])
+
+    // Apply sorting
+    const sorted = [...filtered].sort((a, b) => {
+      switch (sortBy) {
+        case 'nameAsc':
+          return a.name.localeCompare(b.name)
+        case 'nameDesc':
+          return b.name.localeCompare(a.name)
+        case 'starsDesc':
+          return b.stars - a.stars
+        case 'starsAsc':
+          return a.stars - b.stars
+        case 'dateDesc':
+          return new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+        case 'dateAsc':
+          return new Date(a.dateAdded).getTime() - new Date(b.dateAdded).getTime()
+        default:
+          return 0
+      }
+    })
+
+    return sorted
+  }, [searchQuery, selectedCategory, selectedTags, sortBy])
 
   // Stats
   const stats = {
     total: mcpServers.length,
     categories: categories.filter(c => c.count > 0).length,
-    tags: Array.from(new Set(mcpServers.flatMap(s => s.tags))).length
+    tags: allTags.length
+  }
+
+  // Tag selection handlers
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    )
+  }
+
+  const clearAllTags = () => {
+    setSelectedTags([])
   }
 
   return (
@@ -150,14 +205,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Tags Section */}
+      <section className="tags-section">
+        <div className="container">
+          <div className="tags-header">
+            <h2>{t.tags.title}</h2>
+            <div className="tags-actions">
+              {selectedTags.length > 0 && (
+                <button 
+                  className="btn-text clear-tags"
+                  onClick={clearAllTags}
+                >
+                  {t.tags.clearAll}
+                </button>
+              )}
+              {allTags.length > 20 && (
+                <button 
+                  className="btn-text"
+                  onClick={() => setShowAllTags(!showAllTags)}
+                >
+                  {showAllTags ? t.tags.showLess : t.tags.showAll}
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="tags">
+            {visibleTags.map((tag) => (
+              <button
+                key={tag}
+                className={`tag-item ${selectedTags.includes(tag) ? 'active' : ''}`}
+                onClick={() => toggleTag(tag)}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+          {selectedTags.length > 0 && (
+            <div className="selected-tags-info">
+              {t.tags.selectedInfo.replace('{count}', selectedTags.length.toString())}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Servers Section */}
       <section id="servers" className="servers-section">
         <div className="container">
           <div className="servers-header">
             <h2>{selectedCategory === 'all' 
               ? `${t.servers.allServers} (${filteredServers.length})`
-              : `${activeCategories.find(c => c.id === selectedCategory)?.name} (${filteredServers.length})`
+              : `${categoryTranslations[locale][activeCategories.find(c => c.id === selectedCategory)?.name as keyof typeof categoryTranslations['en']] || activeCategories.find(c => c.id === selectedCategory)?.name} (${filteredServers.length})`
             }</h2>
+            <div className="sort-container">
+              <label htmlFor="sort-select" className="sort-label">{t.servers.sortBy}:</label>
+              <select 
+                id="sort-select"
+                className="sort-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortOption)}
+              >
+                <option value="nameAsc">{t.servers.sorting.nameAsc}</option>
+                <option value="nameDesc">{t.servers.sorting.nameDesc}</option>
+                <option value="starsDesc">{t.servers.sorting.starsDesc}</option>
+                <option value="starsAsc">{t.servers.sorting.starsAsc}</option>
+                <option value="dateDesc">{t.servers.sorting.dateDesc}</option>
+                <option value="dateAsc">{t.servers.sorting.dateAsc}</option>
+              </select>
+            </div>
           </div>
 
           {filteredServers.length === 0 ? (
@@ -390,6 +504,72 @@ export default function Home() {
           transform: translateY(-2px);
         }
 
+        .tags-section {
+          padding: 2rem 0;
+          background-color: var(--bg-secondary);
+          border-top: 1px solid var(--border-color);
+        }
+
+        .tags-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+        }
+
+        .tags-actions {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+        }
+
+        .clear-tags {
+          color: var(--secondary-color);
+        }
+
+        .tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .tag-item {
+          padding: 0.375rem 0.75rem;
+          background-color: var(--bg-tertiary);
+          border: 1px solid transparent;
+          border-radius: var(--radius);
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: var(--text-secondary);
+          cursor: pointer;
+          transition: var(--transition-base);
+        }
+
+        .tag-item:hover {
+          background-color: var(--bg-primary);
+          border-color: var(--border-color);
+          color: var(--text-primary);
+        }
+
+        .tag-item.active {
+          background-color: var(--primary-color);
+          color: white;
+          border-color: var(--primary-color);
+          font-weight: 500;
+        }
+
+        .tag-item.active:hover {
+          background-color: var(--primary-color);
+          opacity: 0.9;
+        }
+
+        .selected-tags-info {
+          margin-top: 1rem;
+          font-size: 0.875rem;
+          color: var(--text-secondary);
+          font-style: italic;
+        }
+
         .servers-section {
           padding: 3rem 0;
           background-color: var(--bg-secondary);
@@ -400,6 +580,50 @@ export default function Home() {
           justify-content: space-between;
           align-items: center;
           margin-bottom: 2rem;
+        }
+
+        .sort-container {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .sort-label {
+          font-size: 0.875rem;
+          color: var(--text-secondary);
+          font-weight: 500;
+        }
+
+        .sort-select {
+          padding: 0.5rem 2.5rem 0.5rem 1rem;
+          background-color: var(--bg-primary);
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius);
+          font-size: 0.875rem;
+          color: var(--text-primary);
+          cursor: pointer;
+          transition: var(--transition-base);
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 0.75rem center;
+          background-size: 1rem;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+          .sort-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+          }
+        }
+
+        .sort-select:hover {
+          border-color: var(--primary-color);
+        }
+
+        .sort-select:focus {
+          outline: none;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .servers-grid {
@@ -487,27 +711,87 @@ export default function Home() {
           .servers-grid {
             grid-template-columns: 1fr;
           }
+          
+          .server-header-right {
+            flex-direction: row;
+            gap: 0.75rem;
+          }
+          
+          .servers-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+          
+          .sort-container {
+            width: 100%;
+          }
+          
+          .sort-select {
+            flex: 1;
+          }
+          
+          .tags-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+          
+          .tags-actions {
+            width: 100%;
+            justify-content: space-between;
+          }
         }
       `}</style>
     </>
   )
 }
 
+// Utility function to format star counts
+function formatStars(count: number): string {
+  if (count >= 1000) {
+    return `${(count / 1000).toFixed(1)}k`
+  }
+  return count.toString()
+}
+
+// Utility function to check if a server is new (added within last 30 days)
+function isServerNew(dateAdded: string): boolean {
+  const addedDate = new Date(dateAdded)
+  const currentDate = new Date('2025-06-28') // Using the provided current date
+  const diffTime = currentDate.getTime() - addedDate.getTime()
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  return diffDays <= 30
+}
+
 function ServerCard({ server }: { server: MCPServer }) {
   const [showModal, setShowModal] = useState(false)
   const { t, locale } = useLanguage()
 
+  const isNew = isServerNew(server.dateAdded)
+
   return (
     <>
       <div className="server-card fade-in-up" onClick={() => setShowModal(true)}>
+        {isNew && (
+          <span className="new-badge">{t.servers.new}</span>
+        )}
         <div className="server-header">
           <div>
             <h3 className="server-title">{server.name}</h3>
             <p className="server-author">{t.servers.by} {server.author}</p>
           </div>
-          <span className="server-category">
-            {categoryTranslations[locale][server.category as keyof typeof categoryTranslations['en']] || server.category}
-          </span>
+          <div className="server-header-right">
+            <div className="server-stars">
+              <svg className="star-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span>{formatStars(server.stars)}</span>
+            </div>
+            <span className="server-category">
+              {categoryTranslations[locale][server.category as keyof typeof categoryTranslations['en']] || server.category}
+            </span>
+          </div>
         </div>
         
         <p className="server-description">{server.description}</p>
@@ -529,6 +813,22 @@ function ServerCard({ server }: { server: MCPServer }) {
       <style jsx>{`
         .server-card {
           padding: 1.5rem;
+          position: relative;
+        }
+
+        .new-badge {
+          position: absolute;
+          top: 0.75rem;
+          left: 0.75rem;
+          padding: 0.25rem 0.75rem;
+          background: var(--secondary-color);
+          color: white;
+          border-radius: var(--radius);
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          z-index: 10;
+          box-shadow: var(--shadow-sm);
         }
 
         .server-header {
@@ -536,6 +836,38 @@ function ServerCard({ server }: { server: MCPServer }) {
           justify-content: space-between;
           align-items: start;
           margin-bottom: 1rem;
+        }
+
+        .server-header-right {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 0.5rem;
+        }
+
+        .server-stars {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          color: var(--text-secondary);
+          font-size: 0.875rem;
+          font-weight: 500;
+          transition: var(--transition-fast);
+        }
+
+        .server-card:hover .server-stars {
+          color: var(--text-primary);
+        }
+
+        .star-icon {
+          width: 16px;
+          height: 16px;
+          color: #f59e0b;
+          transition: var(--transition-fast);
+        }
+
+        .server-card:hover .star-icon {
+          transform: scale(1.1);
         }
 
         .server-title {
@@ -585,6 +917,21 @@ function ServerCard({ server }: { server: MCPServer }) {
 
 function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => void }) {
   const { t, locale } = useLanguage()
+  const isNew = isServerNew(server.dateAdded)
+  const [copiedInstall, setCopiedInstall] = useState(false)
+  const [copiedConfig, setCopiedConfig] = useState(false)
+  
+  const copyToClipboard = (text: string, type: 'install' | 'config') => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (type === 'install') {
+        setCopiedInstall(true)
+        setTimeout(() => setCopiedInstall(false), 2000)
+      } else {
+        setCopiedConfig(true)
+        setTimeout(() => setCopiedConfig(false), 2000)
+      }
+    })
+  }
   
   return (
     <>
@@ -592,11 +939,24 @@ function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => vo
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <button className="modal-close" onClick={onClose}>&times;</button>
           <div className="modal-body">
-          <h2>{server.name}</h2>
+          <div className="modal-header-wrapper">
+            <h2>{server.name}</h2>
+            {isNew && (
+              <span className="new-badge-modal">{t.servers.new}</span>
+            )}
+          </div>
           <p className="server-author">{t.servers.by} {server.author}</p>
-          <p className="server-category">
-            {categoryTranslations[locale][server.category as keyof typeof categoryTranslations['en']] || server.category}
-          </p>
+          <div className="modal-header-info">
+            <div className="server-stars-modal">
+              <svg className="star-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span>{formatStars(server.stars)} stars</span>
+            </div>
+            <p className="server-category">
+              {categoryTranslations[locale][server.category as keyof typeof categoryTranslations['en']] || server.category}
+            </p>
+          </div>
           
           <h3>{t.modal.description}</h3>
           <p>{server.description}</p>
@@ -610,11 +970,23 @@ function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => vo
           
           <h3>{t.modal.installation}</h3>
           <div className="code-block">
+            <button 
+              className="copy-button"
+              onClick={() => copyToClipboard(server.installCommand, 'install')}
+            >
+              {copiedInstall ? t.modal.copied : t.modal.copy}
+            </button>
             <pre><code>{server.installCommand}</code></pre>
           </div>
           
           <h3>{t.modal.configuration}</h3>
           <div className="code-block">
+            <button 
+              className="copy-button"
+              onClick={() => copyToClipboard(JSON.stringify(server.config, null, 2), 'config')}
+            >
+              {copiedConfig ? t.modal.copied : t.modal.copy}
+            </button>
             <pre><code>{JSON.stringify(server.config, null, 2)}</code></pre>
           </div>
           
@@ -662,8 +1034,26 @@ function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => vo
         padding: 2rem;
       }
 
-      .modal-body h2 {
+      .modal-header-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
         margin-bottom: 0.5rem;
+      }
+
+      .modal-body h2 {
+        margin-bottom: 0;
+      }
+
+      .new-badge-modal {
+        padding: 0.25rem 0.75rem;
+        background: var(--secondary-color);
+        color: white;
+        border-radius: var(--radius);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        box-shadow: var(--shadow-sm);
       }
 
       .modal-body h3 {
@@ -678,6 +1068,22 @@ function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => vo
         margin-bottom: 0.5rem;
       }
 
+      .modal-header-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .server-stars-modal {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
       .modal-body .server-category {
         display: inline-block;
         padding: 0.25rem 0.75rem;
@@ -686,7 +1092,7 @@ function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => vo
         font-size: 0.75rem;
         font-weight: 500;
         color: var(--primary-color);
-        margin-bottom: 1rem;
+        margin-bottom: 0;
       }
 
       .modal-body ul {
@@ -712,6 +1118,54 @@ function ServerModal({ server, onClose }: { server: MCPServer; onClose: () => vo
         border-radius: var(--radius);
         font-size: 0.75rem;
         color: var(--text-secondary);
+      }
+
+      .code-block {
+        position: relative;
+        background-color: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        padding: 1rem;
+        margin: 1rem 0;
+        overflow: hidden;
+      }
+
+      .code-block pre {
+        margin: 0;
+        overflow-x: auto;
+        padding-right: 3rem;
+      }
+
+      .code-block code {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: var(--text-primary);
+      }
+
+      .copy-button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--text-primary);
+        z-index: 10;
+      }
+
+      .copy-button:hover {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .copy-button:active {
+        transform: scale(0.95);
       }
     `}</style>
     </>

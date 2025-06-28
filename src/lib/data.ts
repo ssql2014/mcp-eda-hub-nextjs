@@ -12,6 +12,7 @@ export interface MCPServer {
   config: Record<string, unknown>;
   features: string[];
   dateAdded: string;
+  stars: number;
 }
 
 export const mcpServers: MCPServer[] = [
@@ -37,7 +38,8 @@ export const mcpServers: MCPServer[] = [
             "Returns total dies, wafer area, and utilization percentage",
             "No need to reverse-engineer calculation formulas"
         ],
-        dateAdded: "2024-12-20"
+        dateAdded: "2024-12-20",
+        stars: 245
     },
     {
         id: "verible-mcp",
@@ -64,7 +66,8 @@ export const mcpServers: MCPServer[] = [
             "Natural language interface for all tools",
             "Intelligent caching for improved performance"
         ],
-        dateAdded: "2024-12-24"
+        dateAdded: "2024-12-24",
+        stars: 1234
     },
     {
         id: "semiconductor-supply-chain",
@@ -90,7 +93,8 @@ export const mcpServers: MCPServer[] = [
             "Support for various technology nodes and foundries",
             "Filter by power requirements and process nodes"
         ],
-        dateAdded: "2025-01-24"
+        dateAdded: "2025-01-24",
+        stars: 89
     },
     {
         id: "yosys-mcp",
@@ -121,7 +125,8 @@ export const mcpServers: MCPServer[] = [
             "Multiple output formats: Verilog, JSON, BLIF, EDIF",
             "Configurable technology mapping and optimization"
         ],
-        dateAdded: "2025-01-24"
+        dateAdded: "2025-01-24",
+        stars: 567
     },
     {
         id: "verilator-mcp",
@@ -151,7 +156,8 @@ export const mcpServers: MCPServer[] = [
             "Protocol-aware testing templates (AXI, APB, etc.)",
             "AI-powered hardware design understanding and debugging assistance"
         ],
-        dateAdded: "2025-01-24"
+        dateAdded: "2025-01-24",
+        stars: 892
     },
     {
         id: "gtkwave-mcp",
@@ -182,7 +188,8 @@ export const mcpServers: MCPServer[] = [
             "Background mode operation for CI/CD integration",
             "Support for GTKWave save files (.gtkw)"
         ],
-        dateAdded: "2025-01-26"
+        dateAdded: "2025-06-15",
+        stars: 156
     },
     {
         id: "klayout-mcp",
@@ -213,7 +220,8 @@ export const mcpServers: MCPServer[] = [
             "Rich resource library with DRC templates and analysis scripts",
             "Intelligent caching for improved performance"
         ],
-        dateAdded: "2025-01-26"
+        dateAdded: "2025-01-26",
+        stars: 2345
     },
     {
         id: "openlane-mcp",
@@ -246,7 +254,8 @@ export const mcpServers: MCPServer[] = [
             "Comprehensive flow reports and statistics generation",
             "Resource library with flow documentation and best practices"
         ],
-        dateAdded: "2025-01-26"
+        dateAdded: "2025-01-26",
+        stars: 412
     }
 ];
 
