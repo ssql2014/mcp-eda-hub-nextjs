@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { mcpServers, categories, type MCPServer } from '@/lib/data'
 import { useLanguage } from '@/components/language-provider'
 import { LanguageSwitcher } from '@/components/language-switcher'
+import { HelpButton } from '@/components/help-button'
+import { ClaudeCodeGuide } from '@/components/claude-code-guide'
 import { categoryTranslations } from '@/lib/i18n'
 
 type SortOption = 'nameAsc' | 'nameDesc' | 'starsDesc' | 'starsAsc' | 'dateDesc' | 'dateAsc'
@@ -16,6 +18,7 @@ export default function Home() {
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [showAllTags, setShowAllTags] = useState(false)
   const [sortBy, setSortBy] = useState<SortOption>('dateDesc')
+  const [showGuide, setShowGuide] = useState(false)
   const { t, locale } = useLanguage()
 
   // Calculate active categories
@@ -119,6 +122,11 @@ export default function Home() {
           <ul className="nav-links">
             <li><a href="#servers">{t.nav.servers}</a></li>
             <li><a href="#about">{t.nav.about}</a></li>
+            <li>
+              <button className="quick-start-btn" onClick={() => setShowGuide(true)}>
+                {t.nav.quickStart}
+              </button>
+            </li>
             <li><Link href="/login">{t.nav.login}</Link></li>
             <li><Link href="/register">{t.nav.register}</Link></li>
             <li>
@@ -138,6 +146,13 @@ export default function Home() {
       {/* Hero Section */}
       <section className="hero">
         <div className="container">
+          <div className="hero-banner" onClick={() => setShowGuide(true)}>
+            <span>{t.hero.banner.text}</span>
+            <span className="banner-link">
+              {t.hero.banner.link} {t.hero.banner.arrow}
+            </span>
+          </div>
+          
           <h1 className="hero-title">{t.hero.title}</h1>
           <p className="hero-subtitle">
             {t.hero.subtitle}
@@ -327,6 +342,12 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* Help Button */}
+      <HelpButton />
+
+      {/* Claude Code Guide Modal */}
+      <ClaudeCodeGuide isOpen={showGuide} onClose={() => setShowGuide(false)} />
+
       <style jsx>{`
         .header {
           background-color: var(--bg-primary);
@@ -383,9 +404,53 @@ export default function Home() {
           height: 24px;
         }
 
+        .quick-start-btn {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: var(--radius);
+          font-weight: 600;
+          font-size: 0.875rem;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .quick-start-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
         .hero {
           padding: 4rem 0;
           text-align: center;
+        }
+
+        .hero-banner {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+          border: 1px solid rgba(99, 102, 241, 0.2);
+          border-radius: 50px;
+          margin-bottom: 2rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-size: 0.875rem;
+          animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero-banner:hover {
+          background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+          border-color: rgba(99, 102, 241, 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .banner-link {
+          color: var(--primary-color);
+          font-weight: 600;
         }
 
         .hero-title {
