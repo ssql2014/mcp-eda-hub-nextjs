@@ -11,7 +11,6 @@ export default function SubmitPage() {
     description: '',
     githubUrl: '',
     category: '',
-    customCategory: '',
     tags: '',
     author: '',
     email: ''
@@ -25,17 +24,12 @@ export default function SubmitPage() {
     setSubmitMessage({ type: '', message: '' })
 
     try {
-      const submitData = {
-        ...formData,
-        category: formData.category === 'custom' ? formData.customCategory : formData.category
-      }
-
       const response = await fetch('/api/submissions/simple', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(submitData),
+        body: JSON.stringify(formData),
       })
 
       const data = await response.json()
@@ -51,7 +45,6 @@ export default function SubmitPage() {
           description: '',
           githubUrl: '',
           category: '',
-          customCategory: '',
           tags: '',
           author: '',
           email: ''
@@ -149,44 +142,31 @@ export default function SubmitPage() {
 
             <div className="form-group">
               <label htmlFor="category">Category *</label>
-              <select
+              <input
+                type="text"
                 id="category"
                 name="category"
                 required
                 value={formData.category}
                 onChange={handleChange}
-              >
-                <option value="">Select a category</option>
-                <option value="design-entry">Design Entry</option>
-                <option value="simulation">Simulation</option>
-                <option value="synthesis">Synthesis</option>
-                <option value="verification">Verification</option>
-                <option value="physical-design">Physical Design</option>
-                <option value="timing-analysis">Timing Analysis</option>
-                <option value="power-analysis">Power Analysis</option>
-                <option value="manufacturing">Manufacturing</option>
-                <option value="pdk-technology">PDK/Technology</option>
-                <option value="test">Test</option>
-                <option value="ip-management">IP Management</option>
-                <option value="utilities">Utilities</option>
-                <option value="custom">Other (Custom Category)</option>
-              </select>
+                placeholder="e.g., Design Entry, Simulation, Synthesis, or enter your own"
+                list="category-suggestions"
+              />
+              <datalist id="category-suggestions">
+                <option value="Design Entry" />
+                <option value="Simulation" />
+                <option value="Synthesis" />
+                <option value="Verification" />
+                <option value="Physical Design" />
+                <option value="Timing Analysis" />
+                <option value="Power Analysis" />
+                <option value="Manufacturing" />
+                <option value="PDK/Technology" />
+                <option value="Test" />
+                <option value="IP Management" />
+                <option value="Utilities" />
+              </datalist>
             </div>
-
-            {formData.category === 'custom' && (
-              <div className="form-group">
-                <label htmlFor="customCategory">Custom Category *</label>
-                <input
-                  type="text"
-                  id="customCategory"
-                  name="customCategory"
-                  required
-                  value={formData.customCategory}
-                  onChange={handleChange}
-                  placeholder="Enter your custom category"
-                />
-              </div>
-            )}
 
             <div className="form-group">
               <label htmlFor="tags">Tags</label>
