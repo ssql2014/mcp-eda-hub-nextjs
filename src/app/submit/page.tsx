@@ -11,16 +11,65 @@ export default function SubmitPage() {
     description: '',
     githubUrl: '',
     category: '',
+    customCategory: '',
     tags: '',
     author: '',
     email: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState({ type: '', message: '' })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Implement form submission logic
-    console.log('Form submitted:', formData)
-    alert('Thank you for your submission! We will review it soon.')
+    setIsSubmitting(true)
+    setSubmitMessage({ type: '', message: '' })
+
+    try {
+      const submitData = {
+        ...formData,
+        category: formData.category === 'custom' ? formData.customCategory : formData.category
+      }
+
+      const response = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitMessage({ 
+          type: 'success', 
+          message: 'Thank you for your submission! We will review it and send a confirmation email soon.' 
+        })
+        // Reset form
+        setFormData({
+          name: '',
+          description: '',
+          githubUrl: '',
+          category: '',
+          customCategory: '',
+          tags: '',
+          author: '',
+          email: ''
+        })
+      } else {
+        setSubmitMessage({ 
+          type: 'error', 
+          message: data.error || 'Failed to submit. Please try again.' 
+        })
+      }
+    } catch (error) {
+      setSubmitMessage({ 
+        type: 'error', 
+        message: 'Network error. Please check your connection and try again.' 
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -113,9 +162,31 @@ export default function SubmitPage() {
                 <option value="synthesis">Synthesis</option>
                 <option value="verification">Verification</option>
                 <option value="physical-design">Physical Design</option>
+                <option value="timing-analysis">Timing Analysis</option>
+                <option value="power-analysis">Power Analysis</option>
+                <option value="manufacturing">Manufacturing</option>
+                <option value="pdk-technology">PDK/Technology</option>
+                <option value="test">Test</option>
+                <option value="ip-management">IP Management</option>
                 <option value="utilities">Utilities</option>
+                <option value="custom">Other (Custom Category)</option>
               </select>
             </div>
+
+            {formData.category === 'custom' && (
+              <div className="form-group">
+                <label htmlFor="customCategory">Custom Category *</label>
+                <input
+                  type="text"
+                  id="customCategory"
+                  name="customCategory"
+                  required
+                  value={formData.customCategory}
+                  onChange={handleChange}
+                  placeholder="Enter your custom category"
+                />
+              </div>
+            )}
 
             <div className="form-group">
               <label htmlFor="tags">Tags</label>
@@ -157,8 +228,14 @@ export default function SubmitPage() {
               </div>
             </div>
 
-            <button type="submit" className="submit-btn">
-              Submit for Review
+            {submitMessage.message && (
+              <div className={`message ${submitMessage.type}`}>
+                {submitMessage.message}
+              </div>
+            )}
+
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Submit for Review'}
             </button>
           </form>
         </div>
@@ -308,6 +385,23 @@ export default function SubmitPage() {
         .submit-btn:disabled {
           opacity: 0.6;
           cursor: not-allowed;
+        }
+
+        .message {
+          padding: 1rem;
+          border-radius: var(--radius);
+          margin-bottom: 1rem;
+          font-weight: 500;
+        }
+
+        .message.success {
+          background-color: #10b981;
+          color: white;
+        }
+
+        .message.error {
+          background-color: #ef4444;
+          color: white;
         }
 
         @media (max-width: 768px) {
