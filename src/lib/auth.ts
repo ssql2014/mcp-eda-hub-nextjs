@@ -13,6 +13,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
+  secret: process.env.NEXTAUTH_SECRET,
+  // Automatically works with NEXTAUTH_URL environment variable
   providers: [
     CredentialsProvider({
       name: "credentials",

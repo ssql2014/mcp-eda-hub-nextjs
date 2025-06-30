@@ -11,7 +11,8 @@ export const translations = {
       about: 'About',
       quickStart: 'Quick Start',
       login: 'Login',
-      register: 'Register'
+      register: 'Register',
+      submit: 'Submit'
     },
     
     // Hero Section
@@ -254,7 +255,8 @@ export const translations = {
       about: '关于',
       quickStart: '快速开始',
       login: '登录',
-      register: '注册'
+      register: '注册',
+      submit: '提交'
     },
     
     // Hero Section

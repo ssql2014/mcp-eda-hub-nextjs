@@ -138,6 +138,14 @@ export default function Home() {
                 {t.nav.quickStart}
               </button>
             </li>
+            <li>
+              <Link href="/submit" className="submit-button">
+                <svg className="submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                {t.nav.submit}
+              </Link>
+            </li>
             <li><Link href="/login">{t.nav.login}</Link></li>
             <li><Link href="/register">{t.nav.register}</Link></li>
             <li>
@@ -434,6 +442,29 @@ export default function Home() {
         .quick-start-btn:hover {
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .submit-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: white;
+          border-radius: var(--radius);
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .submit-icon {
+          width: 18px;
+          height: 18px;
         }
 
         .hero {
