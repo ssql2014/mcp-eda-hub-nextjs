@@ -30,7 +30,7 @@ export default function SubmitPage() {
         category: formData.category === 'custom' ? formData.customCategory : formData.category
       }
 
-      const response = await fetch('/api/submissions', {
+      const response = await fetch('/api/submissions/simple', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

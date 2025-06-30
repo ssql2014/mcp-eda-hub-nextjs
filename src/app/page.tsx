@@ -146,6 +146,9 @@ export default function Home() {
                 {t.nav.submit}
               </Link>
             </li>
+            <li>
+              <Link href="/view-submissions">查看提交</Link>
+            </li>
             <li><Link href="/login">{t.nav.login}</Link></li>
             <li><Link href="/register">{t.nav.register}</Link></li>
             <li>
