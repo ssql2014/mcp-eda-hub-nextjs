@@ -149,6 +149,11 @@ export default function Home() {
             <li>
               <Link href="/view-submissions">查看提交</Link>
             </li>
+            <li>
+              <Link href="/ai-chip-design" className="ai-chip-link">
+                AI芯片设计
+              </Link>
+            </li>
             <li><Link href="/login">{t.nav.login}</Link></li>
             <li><Link href="/register">{t.nav.register}</Link></li>
             <li>
