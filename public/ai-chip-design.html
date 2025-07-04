@@ -22,8 +22,10 @@
         /* Mobile scrolling fix */
         @media (max-width: 768px) {
             body {
-                overflow: auto;
-                overflow-x: hidden;
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
             }
         }
 
@@ -67,9 +69,9 @@
 
         @media (max-width: 768px) {
             .presentation {
-                height: auto;
-                min-height: 100vh;
-                overflow: visible;
+                height: 100vh;
+                overflow: hidden;
+                position: relative;
             }
         }
 
@@ -88,20 +90,29 @@
 
         @media (max-width: 768px) {
             .slide {
-                position: relative;
-                height: auto;
-                min-height: 100vh;
-                transform: none;
-                opacity: 1;
-                display: block;
+                position: absolute;
+                width: 100%;
+                height: 100vh;
+                transform: translateX(0);
+                opacity: 0;
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
                 padding: 20px;
                 padding-bottom: 100px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
             }
 
-            .slide:not(:first-child) {
-                margin-top: 40px;
-                border-top: 2px solid rgba(0, 255, 255, 0.3);
-                padding-top: 40px;
+            .slide.active {
+                opacity: 1;
+                z-index: 10;
+            }
+            
+            .slide > div {
+                width: 100%;
+                padding-top: 20px;
             }
         }
 
@@ -416,11 +427,11 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                background: rgba(0, 0, 0, 0.9);
+                background: rgba(0, 0, 0, 0.95);
                 backdrop-filter: blur(10px);
                 border-top: 1px solid rgba(0, 255, 255, 0.3);
                 padding: 15px;
-                z-index: 1000;
+                z-index: 100;
             }
             
             .mobile-nav-content {
@@ -1380,8 +1391,8 @@
             // 设置当前slide为active
             slides[index].classList.add('active');
 
-            // 设置前一个slide为prev
-            if (index > 0) {
+            // 设置前一个slide为prev (only for desktop)
+            if (!isMobile() && index > 0) {
                 for (let i = 0; i < index; i++) {
                     slides[i].classList.add('prev');
                 }
@@ -1400,11 +1411,11 @@
             // Update mobile indicators
             updateMobileIndicators();
             
-            // On mobile, scroll to the current slide
+            // On mobile, reset scroll position of the new active slide
             if (isMobile()) {
                 const targetSlide = slides[index];
                 if (targetSlide) {
-                    targetSlide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    targetSlide.scrollTop = 0;
                 }
             }
         }
@@ -1430,24 +1441,32 @@
             }
         }
         
-        // Detect which slide is currently visible on mobile
-        function detectCurrentSlideOnMobile() {
+        // Prevent swipe gestures on mobile from changing slides
+        function preventMobileSwipe() {
             if (!isMobile()) return;
             
-            const scrollTop = window.scrollY;
-            const windowHeight = window.innerHeight;
+            let touchStartY = 0;
+            let slideScrollTop = 0;
             
-            slides.forEach((slide, index) => {
-                const rect = slide.getBoundingClientRect();
-                const slideTop = rect.top + scrollTop;
-                const slideMiddle = slideTop + rect.height / 2;
+            slides.forEach(slide => {
+                slide.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                    slideScrollTop = slide.scrollTop;
+                }, { passive: true });
                 
-                if (slideMiddle >= scrollTop && slideMiddle <= scrollTop + windowHeight) {
-                    if (currentSlide !== index) {
-                        currentSlide = index;
-                        updateMobileIndicators();
+                slide.addEventListener('touchmove', (e) => {
+                    const touchY = e.touches[0].clientY;
+                    const diff = touchStartY - touchY;
+                    
+                    // Check if we're at the bounds
+                    const isAtTop = slideScrollTop <= 0 && diff < 0;
+                    const isAtBottom = slideScrollTop + slide.clientHeight >= slide.scrollHeight && diff > 0;
+                    
+                    // Prevent default if trying to scroll beyond bounds
+                    if (isAtTop || isAtBottom) {
+                        e.preventDefault();
                     }
-                }
+                }, { passive: false });
             });
         }
 
@@ -1486,16 +1505,10 @@
             }
         }
         
-        // Mobile scroll detection
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            if (isMobile()) {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    detectCurrentSlideOnMobile();
-                }, 100);
-            }
-        });
+        // Initialize mobile swipe prevention
+        if (isMobile()) {
+            preventMobileSwipe();
+        }
 
         // 初始化显示第一张幻灯片
         showSlide(0);
@@ -1699,10 +1712,6 @@
         // Initialize mobile indicators on load
         if (isMobile()) {
             updateMobileIndicators();
-            // Ensure first slide is visible
-            if (slides[0]) {
-                slides[0].scrollIntoView({ behavior: 'auto', block: 'start' });
-            }
         }
 
         // 打印提示
