@@ -612,13 +612,14 @@ export default function Home() {
         .category-tag {
           padding: 0.5rem 1rem;
           background-color: var(--bg-secondary);
-          border: 2px solid transparent;
+          border: 2px solid var(--border-color);
           border-radius: var(--radius);
           font-size: 0.875rem;
           font-weight: 500;
           cursor: pointer;
           transition: var(--transition-base);
           position: relative;
+          color: var(--text-primary);
         }
 
         .category-tag:hover {
