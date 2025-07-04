@@ -44,7 +44,7 @@ export const mcpServers: MCPServer[] = [
             "Platform navigation automation",
             "Integration with CI/CD pipelines"
         ],
-        dateAdded: "2025-01-04",
+        dateAdded: "2025-07-05",
         stars: 0,
         highlighted: true
     },
