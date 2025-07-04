@@ -13,9 +13,41 @@ export interface MCPServer {
   features: string[];
   dateAdded: string;
   stars: number;
+  highlighted?: boolean;
 }
 
 export const mcpServers: MCPServer[] = [
+    {
+        id: "arcas-onlineeda",
+        name: "Arcas OnlineEDA MCP",
+        author: "ssql2014",
+        category: "Verification",
+        description: "Web automation capabilities for Electronic Design Automation (EDA) platforms. Enables programmatic interaction with verification and design tools through a structured API.",
+        tags: ["verification", "formal-verification", "equivalence-checking", "power-analysis", "security", "fpga", "automation", "web-automation"],
+        githubUrl: "https://github.com/ssql2014/arcas-onlineeda-mcp",
+        installCommand: "git clone https://github.com/ssql2014/arcas-onlineeda-mcp.git && cd arcas-onlineeda-mcp && npm install && npm run build",
+        config: {
+            "arcas-onlineeda": {
+                "command": "node",
+                "args": ["/path/to/arcas-onlineeda-mcp/dist/index.js"]
+            }
+        },
+        features: [
+            "Project management - Create and manage EDA projects programmatically",
+            "File operations - Upload design files (Verilog, VHDL, SystemVerilog, etc.)",
+            "Formal verification execution",
+            "Equivalence checking capabilities",
+            "Power analysis automation",
+            "Security verification workflows",
+            "FPGA verification support",
+            "Natural language interface for EDA tasks",
+            "Platform navigation automation",
+            "Integration with CI/CD pipelines"
+        ],
+        dateAdded: "2025-01-04",
+        stars: 0,
+        highlighted: true
+    },
     {
         id: "anysilicon-die-calculator",
         name: "AnySilicon Die Calculator",
@@ -256,36 +288,6 @@ export const mcpServers: MCPServer[] = [
         ],
         dateAdded: "2025-01-26",
         stars: 412
-    },
-    {
-        id: "arcas-onlineeda",
-        name: "Arcas OnlineEDA MCP",
-        author: "ssql2014",
-        category: "Verification",
-        description: "Web automation capabilities for Electronic Design Automation (EDA) platforms. Enables programmatic interaction with verification and design tools through a structured API.",
-        tags: ["verification", "formal-verification", "equivalence-checking", "power-analysis", "security", "fpga", "automation", "web-automation"],
-        githubUrl: "https://github.com/ssql2014/arcas-onlineeda-mcp",
-        installCommand: "git clone https://github.com/ssql2014/arcas-onlineeda-mcp.git && cd arcas-onlineeda-mcp && npm install && npm run build",
-        config: {
-            "arcas-onlineeda": {
-                "command": "node",
-                "args": ["/path/to/arcas-onlineeda-mcp/dist/index.js"]
-            }
-        },
-        features: [
-            "Project management - Create and manage EDA projects programmatically",
-            "File operations - Upload design files (Verilog, VHDL, SystemVerilog, etc.)",
-            "Formal verification execution",
-            "Equivalence checking capabilities",
-            "Power analysis automation",
-            "Security verification workflows",
-            "FPGA verification support",
-            "Natural language interface for EDA tasks",
-            "Platform navigation automation",
-            "Integration with CI/CD pipelines"
-        ],
-        dateAdded: "2025-01-04",
-        stars: 0
     }
 ];
 

@@ -904,9 +904,12 @@ function ServerCard({ server }: { server: MCPServer }) {
 
   return (
     <>
-      <div className="server-card fade-in-up" onClick={() => setShowModal(true)}>
+      <div className={`server-card fade-in-up ${server.highlighted ? 'highlighted' : ''}`} onClick={() => setShowModal(true)}>
         {isNew && (
           <span className="new-badge">{t.servers.new}</span>
+        )}
+        {server.highlighted && (
+          <span className="highlight-badge">⭐ Featured</span>
         )}
         <div className="server-header">
           <div>

@@ -137,6 +137,33 @@ body {
     border-color: transparent;
 }
 
+/* Highlighted card styles */
+.server-card.highlighted {
+    border: 2px solid var(--primary-color);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 150, 255, 0.05));
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.server-card.highlighted::before {
+    height: 3px;
+    transform: translateX(0);
+}
+
+.highlight-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: var(--radius);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    z-index: 10;
+    box-shadow: var(--shadow-sm);
+}
+
 .fade-in-up {
     animation: fadeIn 0.6s ease-out both;
 }
