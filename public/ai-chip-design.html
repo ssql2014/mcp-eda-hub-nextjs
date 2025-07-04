@@ -623,13 +623,158 @@
             font-weight: bold;
             color: #00ffff;
         }
+        
+        /* Password Protection Styles */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        .password-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+        
+        .password-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .password-box h2 {
+            color: #00ffff;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .password-box p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+        
+        #password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1em;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .password-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .password-submit {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #00ffff, #0088cc);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .password-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+        }
+        
+        .password-submit:active {
+            transform: translateY(0);
+        }
+        
+        .password-error {
+            color: #ff6b6b;
+            font-size: 0.9em;
+            margin-top: 15px;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        /* Mobile optimization for password overlay */
+        @media (max-width: 768px) {
+            .password-box {
+                padding: 30px 20px;
+            }
+            
+            .password-box h2 {
+                font-size: 1.5em;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="bg-animation"></div>
     <div class="circuit-lines"></div>
     
-    <div class="presentation">
+    <!-- Password Protection Overlay -->
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-container">
+            <div class="password-box">
+                <h2>访问需要密码</h2>
+                <p>请输入密码以查看此演示文稿</p>
+                <form id="password-form">
+                    <input 
+                        type="password" 
+                        id="password-input" 
+                        class="password-input" 
+                        placeholder="请输入密码"
+                        autocomplete="off"
+                    />
+                    <button type="submit" class="password-submit">
+                        确认
+                    </button>
+                </form>
+                <p id="password-error" class="password-error" style="display: none;">
+                    密码错误，请重试
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="presentation" style="display: none;">
         <!-- 进度条 -->
         <div class="progress-bar"></div>
         
@@ -1357,15 +1502,81 @@
     </div>
 
     <script>
+        // Password Protection
+        const CORRECT_PASSWORD = 'ai2025'; // Change this to your desired password
+        const PASSWORD_STORAGE_KEY = 'ai_chip_design_auth';
+        
+        // Check if already authenticated
+        function checkAuthentication() {
+            const isAuthenticated = sessionStorage.getItem(PASSWORD_STORAGE_KEY) === 'true';
+            if (isAuthenticated) {
+                showPresentation();
+            }
+        }
+        
+        // Handle password form submission
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const passwordInput = document.getElementById('password-input');
+            const errorMessage = document.getElementById('password-error');
+            
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                // Correct password
+                sessionStorage.setItem(PASSWORD_STORAGE_KEY, 'true');
+                showPresentation();
+            } else {
+                // Wrong password
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Hide error message after 3 seconds
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+        
+        // Show presentation and hide password overlay
+        function showPresentation() {
+            document.getElementById('password-overlay').style.display = 'none';
+            document.querySelector('.presentation').style.display = 'block';
+            // Initialize the presentation
+            initializePresentation();
+        }
+        
+        // Check authentication on page load
+        window.addEventListener('load', checkAuthentication);
+        
+        // Presentation Logic
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
         const progressBar = document.querySelector('.progress-bar');
         const currentPageElement = document.getElementById('current-page');
         const totalPagesElement = document.getElementById('total-pages');
+        
+        function initializePresentation() {
+            // Initialize presentation only after authentication
+            if (totalPagesElement) {
+                totalPagesElement.textContent = totalSlides;
+            }
+            
+            // Initialize mobile-specific features
+            if (isMobile()) {
+                updateMobileIndicators();
+                preventMobileSwipe();
+            }
+            
+            // Initialize progress dots for desktop
+            if (!isMobile()) {
+                createProgressDots();
+            }
+            
+            // Show first slide
+            showSlide(0);
+        }
 
-        // 设置总页数
-        totalPagesElement.textContent = totalSlides;
         
         // Mobile detection
         function isMobile() {
@@ -1510,8 +1721,8 @@
             preventMobileSwipe();
         }
 
-        // 初始化显示第一张幻灯片
-        showSlide(0);
+        // 初始化显示第一张幻灯片 - moved to initializePresentation()
+        // showSlide(0);
 
         // 添加动画效果
         const observer = new IntersectionObserver((entries) => {
@@ -1651,10 +1862,10 @@
             updateDots();
         }
 
-        // 创建进度点 - only for desktop
-        if (!isMobile()) {
-            createProgressDots();
-        }
+        // 创建进度点 - moved to initializePresentation()
+        // if (!isMobile()) {
+        //     createProgressDots();
+        // }
 
         // 添加演讲者备注功能
         const speakerNotes = {
@@ -1709,10 +1920,10 @@
 
         window.addEventListener('resize', handleResize);
         
-        // Initialize mobile indicators on load
-        if (isMobile()) {
-            updateMobileIndicators();
-        }
+        // Initialize mobile indicators on load - moved to initializePresentation
+        // if (isMobile()) {
+        //     updateMobileIndicators();
+        // }
 
         // 打印提示
         console.log('%c🎯 AI虚拟芯片设计公司 - 商业计划PPT', 'color: #00ffff; font-size: 20px; font-weight: bold;');
