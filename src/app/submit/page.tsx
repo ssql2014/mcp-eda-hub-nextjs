@@ -55,7 +55,7 @@ export default function SubmitPage() {
           message: data.error || 'Failed to submit. Please try again.' 
         })
       }
-    } catch (error) {
+    } catch {
       setSubmitMessage({ 
         type: 'error', 
         message: 'Network error. Please check your connection and try again.' 

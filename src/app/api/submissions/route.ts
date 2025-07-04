@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 // Create email transporter
 const createTransporter = () => {
   // Using Gmail as example - you can configure any SMTP service
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Optional: Add authentication check here
     const submissions = await prisma.submission.findMany({
