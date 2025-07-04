@@ -19,6 +19,14 @@
             position: relative;
         }
 
+        /* Mobile scrolling fix */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                overflow-x: hidden;
+            }
+        }
+
         /* 背景动画 */
         .bg-animation {
             position: fixed;
@@ -57,6 +65,14 @@
             overflow: hidden;
         }
 
+        @media (max-width: 768px) {
+            .presentation {
+                height: auto;
+                min-height: 100vh;
+                overflow: visible;
+            }
+        }
+
         .slide {
             width: 100%;
             height: 100%;
@@ -70,6 +86,25 @@
             padding: 60px;
         }
 
+        @media (max-width: 768px) {
+            .slide {
+                position: relative;
+                height: auto;
+                min-height: 100vh;
+                transform: none;
+                opacity: 1;
+                display: block;
+                padding: 20px;
+                padding-bottom: 100px;
+            }
+
+            .slide:not(:first-child) {
+                margin-top: 40px;
+                border-top: 2px solid rgba(0, 255, 255, 0.3);
+                padding-top: 40px;
+            }
+        }
+
         .slide.active {
             opacity: 1;
             transform: translateX(0);
@@ -77,6 +112,13 @@
 
         .slide.prev {
             transform: translateX(-100%);
+        }
+        
+        @media (max-width: 768px) {
+            .slide.active,
+            .slide.prev {
+                transform: none;
+            }
         }
 
         /* 导航控制 */
@@ -321,16 +363,100 @@
         /* 响应式设计 */
         @media (max-width: 768px) {
             .main-title {
-                font-size: 2.5em;
+                font-size: 2em;
+            }
+            
+            .subtitle {
+                font-size: 1.3em;
+            }
+            
+            .slide-title {
+                font-size: 1.8em;
+                margin-bottom: 20px;
             }
             
             .two-column,
             .three-column {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
-            .slide {
-                padding: 30px;
+            .card {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.2em;
+            }
+            
+            .stat-number {
+                font-size: 2em;
+            }
+            
+            .team-grid,
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .bar-chart {
+                height: 200px;
+            }
+            
+            /* Hide desktop navigation on mobile */
+            .controls,
+            .progress-bar,
+            .page-number {
+                display: none;
+            }
+            
+            /* Mobile navigation */
+            .mobile-nav {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.9);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(0, 255, 255, 0.3);
+                padding: 15px;
+                z-index: 1000;
+            }
+            
+            .mobile-nav-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .mobile-nav-btn {
+                background: rgba(0, 255, 255, 0.1);
+                border: 1px solid rgba(0, 255, 255, 0.3);
+                color: #00ffff;
+                padding: 10px 20px;
+                border-radius: 25px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            
+            .mobile-nav-btn:active {
+                background: rgba(0, 255, 255, 0.3);
+                transform: scale(0.95);
+            }
+            
+            .mobile-nav-indicator {
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.6);
+            }
+        }
+
+        /* Desktop only styles */
+        @media (min-width: 769px) {
+            .mobile-nav {
+                display: none;
             }
         }
 
@@ -388,6 +514,13 @@
             margin: 30px 0;
         }
 
+        @media (max-width: 768px) {
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+        }
+
         .tech-item {
             background: rgba(0, 255, 255, 0.1);
             border: 1px solid rgba(0, 255, 255, 0.3);
@@ -408,6 +541,13 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
 
         .team-member {
@@ -1192,6 +1332,17 @@
             <button class="nav-btn" onclick="previousSlide()">‹</button>
             <button class="nav-btn" onclick="nextSlide()">›</button>
         </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <div class="mobile-nav-content">
+                <button class="mobile-nav-btn" onclick="scrollToSlide('prev')">上一页</button>
+                <span class="mobile-nav-indicator">
+                    <span id="mobile-current">1</span> / <span id="mobile-total">15</span>
+                </span>
+                <button class="mobile-nav-btn" onclick="scrollToSlide('next')">下一页</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1204,6 +1355,21 @@
 
         // 设置总页数
         totalPagesElement.textContent = totalSlides;
+        
+        // Mobile detection
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+        
+        // Update mobile indicators
+        function updateMobileIndicators() {
+            const mobileCurrent = document.getElementById('mobile-current');
+            const mobileTotal = document.getElementById('mobile-total');
+            if (mobileCurrent && mobileTotal) {
+                mobileCurrent.textContent = currentSlide + 1;
+                mobileTotal.textContent = totalSlides;
+            }
+        }
 
         function showSlide(index) {
             // 移除所有slide的active和prev类
@@ -1230,6 +1396,17 @@
 
             // 更新当前slide索引
             currentSlide = index;
+            
+            // Update mobile indicators
+            updateMobileIndicators();
+            
+            // On mobile, scroll to the current slide
+            if (isMobile()) {
+                const targetSlide = slides[index];
+                if (targetSlide) {
+                    targetSlide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         }
 
         function nextSlide() {
@@ -1243,37 +1420,82 @@
                 showSlide(currentSlide - 1);
             }
         }
-
-        // 键盘导航
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') {
+        
+        // Mobile scroll navigation
+        function scrollToSlide(direction) {
+            if (direction === 'next') {
                 nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                previousSlide();
-            }
-        });
-
-        // 触摸滑动支持
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                nextSlide();
-            }
-            if (touchEndX > touchStartX + 50) {
+            } else if (direction === 'prev') {
                 previousSlide();
             }
         }
+        
+        // Detect which slide is currently visible on mobile
+        function detectCurrentSlideOnMobile() {
+            if (!isMobile()) return;
+            
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            slides.forEach((slide, index) => {
+                const rect = slide.getBoundingClientRect();
+                const slideTop = rect.top + scrollTop;
+                const slideMiddle = slideTop + rect.height / 2;
+                
+                if (slideMiddle >= scrollTop && slideMiddle <= scrollTop + windowHeight) {
+                    if (currentSlide !== index) {
+                        currentSlide = index;
+                        updateMobileIndicators();
+                    }
+                }
+            });
+        }
+
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (!isMobile()) {
+                if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    previousSlide();
+                }
+            }
+        });
+
+        // 触摸滑动支持 - only for desktop presentation mode
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        if (!isMobile()) {
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            document.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    nextSlide();
+                }
+                if (touchEndX > touchStartX + 50) {
+                    previousSlide();
+                }
+            }
+        }
+        
+        // Mobile scroll detection
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (isMobile()) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    detectCurrentSlideOnMobile();
+                }, 100);
+            }
+        });
 
         // 初始化显示第一张幻灯片
         showSlide(0);
@@ -1327,21 +1549,23 @@
             }
         });
 
-        // 鼠标滚轮支持
+        // 鼠标滚轮支持 - only for desktop
         let isScrolling = false;
-        document.addEventListener('wheel', (e) => {
-            if (!isScrolling) {
-                isScrolling = true;
-                if (e.deltaY > 0) {
-                    nextSlide();
-                } else {
-                    previousSlide();
+        if (!isMobile()) {
+            document.addEventListener('wheel', (e) => {
+                if (!isScrolling) {
+                    isScrolling = true;
+                    if (e.deltaY > 0) {
+                        nextSlide();
+                    } else {
+                        previousSlide();
+                    }
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 800);
                 }
-                setTimeout(() => {
-                    isScrolling = false;
-                }, 800);
-            }
-        });
+            });
+        }
 
         // 添加全屏功能
         function toggleFullscreen() {
@@ -1414,8 +1638,10 @@
             updateDots();
         }
 
-        // 创建进度点
-        createProgressDots();
+        // 创建进度点 - only for desktop
+        if (!isMobile()) {
+            createProgressDots();
+        }
 
         // 添加演讲者备注功能
         const speakerNotes = {
@@ -1456,22 +1682,28 @@
 
         // 响应式处理
         function handleResize() {
-            const width = window.innerWidth;
-            if (width < 768) {
-                // 移动端调整
-                document.querySelectorAll('.slide').forEach(slide => {
-                    slide.style.padding = '30px';
-                });
-            } else {
-                // 桌面端
-                document.querySelectorAll('.slide').forEach(slide => {
-                    slide.style.padding = '60px';
-                });
-            }
+            const wasMobile = window.innerWidth <= 768;
+            
+            // Check if we need to reinitialize due to device change
+            setTimeout(() => {
+                const isNowMobile = window.innerWidth <= 768;
+                if (wasMobile !== isNowMobile) {
+                    // Device type changed, reload page for proper initialization
+                    window.location.reload();
+                }
+            }, 100);
         }
 
         window.addEventListener('resize', handleResize);
-        handleResize();
+        
+        // Initialize mobile indicators on load
+        if (isMobile()) {
+            updateMobileIndicators();
+            // Ensure first slide is visible
+            if (slides[0]) {
+                slides[0].scrollIntoView({ behavior: 'auto', block: 'start' });
+            }
+        }
 
         // 打印提示
         console.log('%c🎯 AI虚拟芯片设计公司 - 商业计划PPT', 'color: #00ffff; font-size: 20px; font-weight: bold;');
