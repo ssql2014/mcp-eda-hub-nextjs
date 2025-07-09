@@ -288,6 +288,72 @@ export const mcpServers: MCPServer[] = [
         ],
         dateAdded: "2025-01-26",
         stars: 412
+    },
+    {
+        id: "cbmc-mcp",
+        name: "CBMC MCP Server",
+        author: "mcp4eda",
+        category: "Verification",
+        description: "Bounded Model Checking for C/C++ programs. Provides formal verification capabilities to detect bugs like buffer overflows, null pointer dereferences, arithmetic overflows, and assertion violations.",
+        tags: ["cbmc", "formal-verification", "model-checking", "c", "c++", "safety", "security", "assertions"],
+        githubUrl: "https://github.com/ssql2014/mcp4eda/tree/main/cbmc-mcp",
+        installCommand: "git clone https://github.com/ssql2014/mcp4eda.git && cd mcp4eda/cbmc-mcp && npm install && npm run build",
+        config: {
+            "cbmc": {
+                "command": "node",
+                "args": ["/path/to/mcp4eda/cbmc-mcp/dist/index.js"],
+                "env": {
+                    "CBMC_PATH": "/usr/local/bin/cbmc",
+                    "LOG_LEVEL": "info"
+                }
+            }
+        },
+        features: [
+            "Verify C/C++ code for assertions and safety properties",
+            "Detect buffer overflows and array bounds violations",
+            "Check for null pointer dereferences",
+            "Identify arithmetic overflows and underflows",
+            "Verify division by zero conditions",
+            "Check function equivalence between implementations",
+            "Support for loop unwinding with configurable bounds",
+            "Generate counterexample traces for debugging",
+            "Natural language interface for verification queries"
+        ],
+        dateAdded: "2025-01-27",
+        stars: 178
+    },
+    {
+        id: "c2rtl-verify-mcp",
+        name: "C2RTL Verify MCP",
+        author: "mcp4eda",
+        category: "Verification",
+        description: "High-level synthesis verification tool that converts C/C++ code to RTL and performs equivalence checking. Enables verification of hardware implementations against their C/C++ specifications.",
+        tags: ["c2rtl", "high-level-synthesis", "hls", "verification", "equivalence-checking", "c", "c++", "rtl", "verilog"],
+        githubUrl: "https://github.com/ssql2014/mcp4eda/tree/main/c2rtl-verify-mcp",
+        installCommand: "git clone https://github.com/ssql2014/mcp4eda.git && cd mcp4eda/c2rtl-verify-mcp && npm install && npm run build",
+        config: {
+            "c2rtl-verify": {
+                "command": "node",
+                "args": ["/path/to/mcp4eda/c2rtl-verify-mcp/dist/index.js"],
+                "env": {
+                    "C2RTL_PATH": "/usr/local/bin/c2rtl",
+                    "LOG_LEVEL": "info"
+                }
+            }
+        },
+        features: [
+            "Convert C/C++ code to synthesizable RTL (Verilog/SystemVerilog)",
+            "Perform equivalence checking between C model and RTL implementation",
+            "Support for various C constructs including loops, arrays, and pointers",
+            "Automatic testbench generation for verification",
+            "Bit-accurate verification with configurable precision",
+            "Support for fixed-point and floating-point operations",
+            "Integration with formal verification tools",
+            "Performance analysis and optimization suggestions",
+            "Natural language interface for HLS verification queries"
+        ],
+        dateAdded: "2025-01-27",
+        stars: 234
     }
 ];
 
