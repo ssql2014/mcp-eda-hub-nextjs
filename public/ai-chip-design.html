@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI虚拟芯片设计公司 - 商业计划</title>
+    <title>Axon - AI虚拟芯片设计公司商业计划</title>
     <style>
         * {
             margin: 0;
@@ -17,16 +17,6 @@
             color: #fff;
             overflow: hidden;
             position: relative;
-        }
-
-        /* Mobile scrolling fix */
-        @media (max-width: 768px) {
-            body {
-                overflow: hidden;
-                position: fixed;
-                width: 100%;
-                height: 100%;
-            }
         }
 
         /* 背景动画 */
@@ -67,14 +57,6 @@
             overflow: hidden;
         }
 
-        @media (max-width: 768px) {
-            .presentation {
-                height: 100vh;
-                overflow: hidden;
-                position: relative;
-            }
-        }
-
         .slide {
             width: 100%;
             height: 100%;
@@ -88,34 +70,6 @@
             padding: 60px;
         }
 
-        @media (max-width: 768px) {
-            .slide {
-                position: absolute;
-                width: 100%;
-                height: 100vh;
-                transform: translateX(0);
-                opacity: 0;
-                display: flex;
-                align-items: flex-start;
-                justify-content: flex-start;
-                padding: 20px;
-                padding-bottom: 100px;
-                overflow-y: auto;
-                overflow-x: hidden;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .slide.active {
-                opacity: 1;
-                z-index: 10;
-            }
-            
-            .slide > div {
-                width: 100%;
-                padding-top: 20px;
-            }
-        }
-
         .slide.active {
             opacity: 1;
             transform: translateX(0);
@@ -123,13 +77,6 @@
 
         .slide.prev {
             transform: translateX(-100%);
-        }
-        
-        @media (max-width: 768px) {
-            .slide.active,
-            .slide.prev {
-                transform: none;
-            }
         }
 
         /* 导航控制 */
@@ -374,100 +321,16 @@
         /* 响应式设计 */
         @media (max-width: 768px) {
             .main-title {
-                font-size: 2em;
-            }
-            
-            .subtitle {
-                font-size: 1.3em;
-            }
-            
-            .slide-title {
-                font-size: 1.8em;
-                margin-bottom: 20px;
+                font-size: 2.5em;
             }
             
             .two-column,
             .three-column {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             
-            .card {
-                padding: 20px;
-            }
-            
-            .card-title {
-                font-size: 1.2em;
-            }
-            
-            .stat-number {
-                font-size: 2em;
-            }
-            
-            .team-grid,
-            .tech-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .bar-chart {
-                height: 200px;
-            }
-            
-            /* Hide desktop navigation on mobile */
-            .controls,
-            .progress-bar,
-            .page-number {
-                display: none;
-            }
-            
-            /* Mobile navigation */
-            .mobile-nav {
-                display: block;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(10px);
-                border-top: 1px solid rgba(0, 255, 255, 0.3);
-                padding: 15px;
-                z-index: 100;
-            }
-            
-            .mobile-nav-content {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-            
-            .mobile-nav-btn {
-                background: rgba(0, 255, 255, 0.1);
-                border: 1px solid rgba(0, 255, 255, 0.3);
-                color: #00ffff;
-                padding: 10px 20px;
-                border-radius: 25px;
-                font-size: 14px;
-                cursor: pointer;
-                transition: all 0.3s;
-            }
-            
-            .mobile-nav-btn:active {
-                background: rgba(0, 255, 255, 0.3);
-                transform: scale(0.95);
-            }
-            
-            .mobile-nav-indicator {
-                font-size: 12px;
-                color: rgba(255, 255, 255, 0.6);
-            }
-        }
-
-        /* Desktop only styles */
-        @media (min-width: 769px) {
-            .mobile-nav {
-                display: none;
+            .slide {
+                padding: 30px;
             }
         }
 
@@ -525,13 +388,6 @@
             margin: 30px 0;
         }
 
-        @media (max-width: 768px) {
-            .tech-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-        }
-
         .tech-item {
             background: rgba(0, 255, 255, 0.1);
             border: 1px solid rgba(0, 255, 255, 0.3);
@@ -552,13 +408,6 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin: 30px 0;
-        }
-
-        @media (max-width: 768px) {
-            .team-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
         }
 
         .team-member {
@@ -623,7 +472,6 @@
             font-weight: bold;
             color: #00ffff;
         }
-        
         /* Password Protection Styles */
         .password-overlay {
             position: fixed;
@@ -786,8 +634,8 @@
         <!-- Slide 1: 标题页 -->
         <div class="slide active title-slide">
             <div>
-                <h1 class="main-title fade-in">AI虚拟芯片设计公司</h1>
-                <p class="subtitle fade-in" style="animation-delay: 0.2s">全球首个AI Agent驱动的芯片设计服务</p>
+                <h1 class="main-title fade-in">Axon</h1>
+                <p class="subtitle fade-in" style="animation-delay: 0.2s">AI虚拟芯片设计公司 - 全球首个AI Agent驱动的芯片设计服务</p>
                 <p class="tagline fade-in" style="animation-delay: 0.4s">不是卖工具，而是直接交付设计成果</p>
                 <div style="margin-top: 60px;" class="fade-in" style="animation-delay: 0.6s">
                     <p style="font-size: 1.1em; color: rgba(255, 255, 255, 0.7);">种子轮融资计划书</p>
@@ -1023,20 +871,20 @@
                         </div>
                     </div>
                     <div>
-                        <h3 style="color: #00ffff; margin-bottom: 30px;">Claude Code实践成果</h3>
+                        <h3 style="color: #00ffff; margin-bottom: 30px;">c2rtl编译器成果</h3>
                         <div class="card">
                             <div class="card-content">
                                 <div style="margin-bottom: 25px;">
-                                    <h4 style="color: #ff00ff; margin-bottom: 10px;">RISC-V解码器</h4>
-                                    <p style="color: rgba(255, 255, 255, 0.7);">500行Verilog代码，通过所有测试</p>
+                                    <h4 style="color: #ff00ff; margin-bottom: 10px;">C到RTL自动转换</h4>
+                                    <p style="color: rgba(255, 255, 255, 0.7);">实现五阶段AST转换管道，100+测试用例</p>
                                 </div>
                                 <div style="margin-bottom: 25px;">
-                                    <h4 style="color: #ff00ff; margin-bottom: 10px;">AXI协议转换器</h4>
-                                    <p style="color: rgba(255, 255, 255, 0.7);">开发时间从1周缩短到2小时</p>
+                                    <h4 style="color: #ff00ff; margin-bottom: 10px;">CORDIC算法实现</h4>
+                                    <p style="color: rgba(255, 255, 255, 0.7);">从C代码自动生成500行Verilog RTL</p>
                                 </div>
                                 <div>
-                                    <h4 style="color: #ff00ff; margin-bottom: 10px;">UVM测试平台</h4>
-                                    <p style="color: rgba(255, 255, 255, 0.7);">自动生成20+测试用例，覆盖率92%</p>
+                                    <h4 style="color: #ff00ff; margin-bottom: 10px;">GCD算法验证</h4>
+                                    <p style="color: rgba(255, 255, 255, 0.7);">通过CBMC形式化验证，确保等价性</p>
                                 </div>
                             </div>
                         </div>
@@ -1084,7 +932,7 @@
                         <div style="text-align: center;">
                             <div class="stat-number">60%</div>
                             <div class="stat-label">AI设计服务</div>
-                            <p style="margin-top: 10px; font-size: 0.9em;">20-800万/项目</p>
+                            <p style="margin-top: 10px; font-size: 0.9em;">RTL:20-100万<br>网表:100-300万<br>GDSII:300-800万</p>
                         </div>
                         <div style="text-align: center;">
                             <div class="stat-number">30%</div>
@@ -1101,7 +949,49 @@
             </div>
         </div>
 
-        <!-- Slide 8: 成本革命 -->
+        <!-- Slide 8: EDA工具接入策略 -->
+        <div class="slide content-slide">
+            <div>
+                <h2 class="slide-title">EDA工具接入策略</h2>
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <p style="font-size: 1.3em; color: rgba(255, 255, 255, 0.8);">无需等待巨头合作，<span class="gradient-text">立即可以开始</span></p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4 style="color: #00ffff;">第一阶段：借道客户（0-6个月）</h4>
+                            <p>• 使用客户已有License，零额外成本</p>
+                            <p>• 通过VPN接入，数据不出客户网络</p>
+                            <p>• TCL/Python脚本调用，无需深度集成</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4 style="color: #00ffff;">第二阶段：云端服务（6-12个月）</h4>
+                            <p>• Synopsys Cloud按需付费</p>
+                            <p>• Cadence CloudBurst弹性计算</p>
+                            <p>• 开源工具自由部署</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4 style="color: #00ffff;">第三阶段：战略合作（12个月+）</h4>
+                            <p>• Startup Program享受90%折扣</p>
+                            <p>• OEM协议获得批量授权</p>
+                            <p>• 成为AI生态合作伙伴</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <p style="font-size: 1.2em; color: #ff00ff;">关键洞察：EDA厂商需要我们证明其工具的"AI就绪度"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: 成本革命 -->
         <div class="slide content-slide">
             <div>
                 <h2 class="slide-title">AI驱动的成本革命</h2>
@@ -1268,16 +1158,16 @@
                     <div>
                         <h3 style="color: #00ffff; margin-bottom: 30px;">营收预测</h3>
                         <div class="bar-chart" style="height: 300px;">
-                            <div class="bar" style="height: 20%;">
+                            <div class="bar" style="height: 10%;">
                                 <span class="bar-value">800万</span>
                                 <span class="bar-label">2025</span>
                             </div>
-                            <div class="bar" style="height: 50%;">
-                                <span class="bar-value">4000万</span>
+                            <div class="bar" style="height: 40%;">
+                                <span class="bar-value">3000万</span>
                                 <span class="bar-label">2026</span>
                             </div>
                             <div class="bar" style="height: 100%;">
-                                <span class="bar-value">1亿+</span>
+                                <span class="bar-value">8000万</span>
                                 <span class="bar-label">2027</span>
                             </div>
                         </div>
@@ -1296,7 +1186,7 @@
                                 <div class="timeline-marker"></div>
                                 <div class="timeline-content">
                                     <h4>Q4 2025</h4>
-                                    <p>15家客户，月收入100万</p>
+                                    <p>10家客户，月收入100万</p>
                                 </div>
                             </div>
                             <div class="timeline-item">
@@ -1375,52 +1265,7 @@
             </div>
         </div>
 
-        <!-- Slide 13: 风险管理 -->
-        <div class="slide content-slide">
-            <div>
-                <h2 class="slide-title">风险识别与应对策略</h2>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
-                    <div class="card">
-                        <h3 class="card-title">🔧 技术风险</h3>
-                        <div class="card-content">
-                            <p><strong>AI模型可靠性</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ 三重保障：多模型验证+自动测试+人工审核</p>
-                            <p style="margin-top: 15px;"><strong>EDA集成复杂性</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ MCP协议统一接口+战略合作</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3 class="card-title">📊 市场风险</h3>
-                        <div class="card-content">
-                            <p><strong>客户接受度</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ 渐进式推广+标杆案例+混合模式</p>
-                            <p style="margin-top: 15px;"><strong>竞争对手跟进</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ 快速迭代+专利保护+深度绑定</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3 class="card-title">👥 运营风险</h3>
-                        <div class="card-content">
-                            <p><strong>人才招聘困难</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ 期权激励+高校合作+全球远程</p>
-                            <p style="margin-top: 15px;"><strong>现金流管理</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ 预付费模式+分阶段付款+银行授信</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3 class="card-title">🔒 合规风险</h3>
-                        <div class="card-content">
-                            <p><strong>数据安全</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ ISO27001认证+私有部署选项</p>
-                            <p style="margin-top: 15px;"><strong>出口管制</strong></p>
-                            <p style="padding-left: 20px; color: rgba(255, 255, 255, 0.7);">→ 技术中立+自主可控+应急预案</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 14: 愿景与号召 -->
+        <!-- Slide 13: 愿景与号召 -->
         <div class="slide content-slide">
             <div>
                 <h2 class="slide-title">共创芯片设计的AI未来</h2>
@@ -1461,7 +1306,7 @@
             </div>
         </div>
 
-        <!-- Slide 15: 联系方式 -->
+        <!-- Slide 14: 联系方式 -->
         <div class="slide content-slide">
             <div style="text-align: center;">
                 <h2 class="slide-title">谢谢观看</h2>
@@ -1488,110 +1333,76 @@
             <button class="nav-btn" onclick="previousSlide()">‹</button>
             <button class="nav-btn" onclick="nextSlide()">›</button>
         </div>
-        
-        <!-- Mobile Navigation -->
-        <div class="mobile-nav">
-            <div class="mobile-nav-content">
-                <button class="mobile-nav-btn" onclick="scrollToSlide('prev')">上一页</button>
-                <span class="mobile-nav-indicator">
-                    <span id="mobile-current">1</span> / <span id="mobile-total">15</span>
-                </span>
-                <button class="mobile-nav-btn" onclick="scrollToSlide('next')">下一页</button>
-            </div>
-        </div>
     </div>
 
     <script>
-        // Password Protection
-        const CORRECT_PASSWORD = 'ai2025'; // Change this to your desired password
-        const PASSWORD_STORAGE_KEY = 'ai_chip_design_auth';
-        
-        // Check if already authenticated
-        function checkAuthentication() {
-            const isAuthenticated = sessionStorage.getItem(PASSWORD_STORAGE_KEY) === 'true';
-            if (isAuthenticated) {
-                showPresentation();
-            }
+        // Password protection
+        const correctPassword = 'ai2025';
+        const passwordOverlay = document.getElementById('password-overlay');
+        const passwordForm = document.getElementById('password-form');
+        const passwordInput = document.getElementById('password-input');
+        const passwordError = document.getElementById('password-error');
+        const presentation = document.querySelector('.presentation');
+
+        // Initially hide the presentation
+        presentation.style.display = 'none';
+
+        // Check for saved authentication
+        const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+        if (isAuthenticated) {
+            passwordOverlay.style.display = 'none';
+            presentation.style.display = 'block';
         }
-        
-        // Handle password form submission
-        document.getElementById('password-form').addEventListener('submit', function(e) {
+
+        // Handle password submission
+        passwordForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const passwordInput = document.getElementById('password-input');
-            const errorMessage = document.getElementById('password-error');
+            const enteredPassword = passwordInput.value;
             
-            if (passwordInput.value === CORRECT_PASSWORD) {
+            if (enteredPassword === correctPassword) {
                 // Correct password
-                sessionStorage.setItem(PASSWORD_STORAGE_KEY, 'true');
-                showPresentation();
+                sessionStorage.setItem('authenticated', 'true');
+                passwordOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    passwordOverlay.style.display = 'none';
+                    presentation.style.display = 'block';
+                    // Trigger initial slide display
+                    showSlide(0);
+                }, 300);
             } else {
                 // Wrong password
-                errorMessage.style.display = 'block';
+                passwordError.style.display = 'block';
                 passwordInput.value = '';
-                passwordInput.focus();
-                
-                // Hide error message after 3 seconds
+                passwordInput.classList.add('shake');
                 setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
+                    passwordInput.classList.remove('shake');
+                }, 500);
             }
         });
-        
-        // Show presentation and hide password overlay
-        function showPresentation() {
-            document.getElementById('password-overlay').style.display = 'none';
-            document.querySelector('.presentation').style.display = 'block';
-            // Initialize the presentation
-            initializePresentation();
-        }
-        
-        // Check authentication on page load
-        window.addEventListener('load', checkAuthentication);
-        
-        // Presentation Logic
+
+        // Add shake animation for wrong password
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px); }
+            }
+            .shake {
+                animation: shake 0.5s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
         const progressBar = document.querySelector('.progress-bar');
         const currentPageElement = document.getElementById('current-page');
         const totalPagesElement = document.getElementById('total-pages');
-        
-        function initializePresentation() {
-            // Initialize presentation only after authentication
-            if (totalPagesElement) {
-                totalPagesElement.textContent = totalSlides;
-            }
-            
-            // Initialize mobile-specific features
-            if (isMobile()) {
-                updateMobileIndicators();
-                preventMobileSwipe();
-            }
-            
-            // Initialize progress dots for desktop
-            if (!isMobile()) {
-                createProgressDots();
-            }
-            
-            // Show first slide
-            showSlide(0);
-        }
 
-        
-        // Mobile detection
-        function isMobile() {
-            return window.innerWidth <= 768;
-        }
-        
-        // Update mobile indicators
-        function updateMobileIndicators() {
-            const mobileCurrent = document.getElementById('mobile-current');
-            const mobileTotal = document.getElementById('mobile-total');
-            if (mobileCurrent && mobileTotal) {
-                mobileCurrent.textContent = currentSlide + 1;
-                mobileTotal.textContent = totalSlides;
-            }
-        }
+        // 设置总页数
+        totalPagesElement.textContent = totalSlides;
 
         function showSlide(index) {
             // 移除所有slide的active和prev类
@@ -1602,8 +1413,8 @@
             // 设置当前slide为active
             slides[index].classList.add('active');
 
-            // 设置前一个slide为prev (only for desktop)
-            if (!isMobile() && index > 0) {
+            // 设置前一个slide为prev
+            if (index > 0) {
                 for (let i = 0; i < index; i++) {
                     slides[i].classList.add('prev');
                 }
@@ -1618,17 +1429,6 @@
 
             // 更新当前slide索引
             currentSlide = index;
-            
-            // Update mobile indicators
-            updateMobileIndicators();
-            
-            // On mobile, reset scroll position of the new active slide
-            if (isMobile()) {
-                const targetSlide = slides[index];
-                if (targetSlide) {
-                    targetSlide.scrollTop = 0;
-                }
-            }
         }
 
         function nextSlide() {
@@ -1642,87 +1442,40 @@
                 showSlide(currentSlide - 1);
             }
         }
-        
-        // Mobile scroll navigation
-        function scrollToSlide(direction) {
-            if (direction === 'next') {
-                nextSlide();
-            } else if (direction === 'prev') {
-                previousSlide();
-            }
-        }
-        
-        // Prevent swipe gestures on mobile from changing slides
-        function preventMobileSwipe() {
-            if (!isMobile()) return;
-            
-            let touchStartY = 0;
-            let slideScrollTop = 0;
-            
-            slides.forEach(slide => {
-                slide.addEventListener('touchstart', (e) => {
-                    touchStartY = e.touches[0].clientY;
-                    slideScrollTop = slide.scrollTop;
-                }, { passive: true });
-                
-                slide.addEventListener('touchmove', (e) => {
-                    const touchY = e.touches[0].clientY;
-                    const diff = touchStartY - touchY;
-                    
-                    // Check if we're at the bounds
-                    const isAtTop = slideScrollTop <= 0 && diff < 0;
-                    const isAtBottom = slideScrollTop + slide.clientHeight >= slide.scrollHeight && diff > 0;
-                    
-                    // Prevent default if trying to scroll beyond bounds
-                    if (isAtTop || isAtBottom) {
-                        e.preventDefault();
-                    }
-                }, { passive: false });
-            });
-        }
 
         // 键盘导航
         document.addEventListener('keydown', (e) => {
-            if (!isMobile()) {
-                if (e.key === 'ArrowRight') {
-                    nextSlide();
-                } else if (e.key === 'ArrowLeft') {
-                    previousSlide();
-                }
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
             }
         });
 
-        // 触摸滑动支持 - only for desktop presentation mode
+        // 触摸滑动支持
         let touchStartX = 0;
         let touchEndX = 0;
 
-        if (!isMobile()) {
-            document.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
 
-            document.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
 
-            function handleSwipe() {
-                if (touchEndX < touchStartX - 50) {
-                    nextSlide();
-                }
-                if (touchEndX > touchStartX + 50) {
-                    previousSlide();
-                }
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                previousSlide();
             }
         }
-        
-        // Initialize mobile swipe prevention
-        if (isMobile()) {
-            preventMobileSwipe();
-        }
 
-        // 初始化显示第一张幻灯片 - moved to initializePresentation()
-        // showSlide(0);
+        // 初始化显示第一张幻灯片
+        showSlide(0);
 
         // 添加动画效果
         const observer = new IntersectionObserver((entries) => {
@@ -1773,23 +1526,21 @@
             }
         });
 
-        // 鼠标滚轮支持 - only for desktop
+        // 鼠标滚轮支持
         let isScrolling = false;
-        if (!isMobile()) {
-            document.addEventListener('wheel', (e) => {
-                if (!isScrolling) {
-                    isScrolling = true;
-                    if (e.deltaY > 0) {
-                        nextSlide();
-                    } else {
-                        previousSlide();
-                    }
-                    setTimeout(() => {
-                        isScrolling = false;
-                    }, 800);
+        document.addEventListener('wheel', (e) => {
+            if (!isScrolling) {
+                isScrolling = true;
+                if (e.deltaY > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
                 }
-            });
-        }
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 800);
+            }
+        });
 
         // 添加全屏功能
         function toggleFullscreen() {
@@ -1862,10 +1613,8 @@
             updateDots();
         }
 
-        // 创建进度点 - moved to initializePresentation()
-        // if (!isMobile()) {
-        //     createProgressDots();
-        // }
+        // 创建进度点
+        createProgressDots();
 
         // 添加演讲者备注功能
         const speakerNotes = {
@@ -1876,12 +1625,12 @@
             4: "双循环验证系统确保AI生成的设计质量达到甚至超越人工水平。",
             5: "mcp4eda.cn平台已经验证了我们的技术可行性，Claude Code实践证明了商业价值。",
             6: "服务交付模式让我们快速获取现金流，同时积累宝贵的训练数据。",
-            7: "AI驱动的成本结构让我们具有压倒性的竞争优势。",
-            8: "精准的市场策略确保我们能够快速获取客户并建立品牌。",
-            9: "EDA巨头的商业模式决定了他们不会成为我们的直接竞争对手。",
-            10: "清晰的财务规划和里程碑设置确保投资回报。",
-            11: "资金使用聚焦于核心能力建设，确保快速发展。",
-            12: "我们识别了主要风险并制定了完善的应对策略。",
+            7: "EDA工具接入不需要等待巨头合作，我们可以立即开始。",
+            8: "AI驱动的成本结构让我们具有压倒性的竞争优势。",
+            9: "精准的市场策略确保我们能够快速获取客户并建立品牌。",
+            10: "EDA巨头的商业模式决定了他们不会成为我们的直接竞争对手。",
+            11: "更激进的财务目标：2025年2000万，2026年8000万，2027年3亿。",
+            12: "资金使用聚焦于核心能力建设，确保快速发展。",
             13: "我们的愿景是让AI技术民主化芯片设计能力。",
             14: "感谢您的关注，期待与您共创芯片设计的AI未来！"
         };
@@ -1906,24 +1655,22 @@
 
         // 响应式处理
         function handleResize() {
-            const wasMobile = window.innerWidth <= 768;
-            
-            // Check if we need to reinitialize due to device change
-            setTimeout(() => {
-                const isNowMobile = window.innerWidth <= 768;
-                if (wasMobile !== isNowMobile) {
-                    // Device type changed, reload page for proper initialization
-                    window.location.reload();
-                }
-            }, 100);
+            const width = window.innerWidth;
+            if (width < 768) {
+                // 移动端调整
+                document.querySelectorAll('.slide').forEach(slide => {
+                    slide.style.padding = '30px';
+                });
+            } else {
+                // 桌面端
+                document.querySelectorAll('.slide').forEach(slide => {
+                    slide.style.padding = '60px';
+                });
+            }
         }
 
         window.addEventListener('resize', handleResize);
-        
-        // Initialize mobile indicators on load - moved to initializePresentation
-        // if (isMobile()) {
-        //     updateMobileIndicators();
-        // }
+        handleResize();
 
         // 打印提示
         console.log('%c🎯 AI虚拟芯片设计公司 - 商业计划PPT', 'color: #00ffff; font-size: 20px; font-weight: bold;');
