@@ -150,7 +150,7 @@ export default function Home() {
               <Link href="/view-submissions">查看提交</Link>
             </li>
             <li>
-              <Link href="/ai-chip-design" className="ai-chip-link">
+              <Link href="/ai-chip-design-ppt-new.html" className="ai-chip-link">
                 AI芯片设计
               </Link>
             </li>
